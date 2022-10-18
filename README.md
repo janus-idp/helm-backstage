@@ -1,3 +1,3 @@
 # helm-backstage
 
-A [Helm](https://helm.sh) for [Backstage](https://backstage.io).
+A [Helm](https://helm.sh) chart for [Backstage](https://backstage.io).
