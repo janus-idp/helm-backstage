@@ -1,4 +1,4 @@
-replicaCount: 1
+GreplicaCount: 1
 
 image:
   #repository: ghcr.io/raffaelespazzoli/backstage-autobuild
@@ -23,6 +23,19 @@ route:
 ingress:
   enabled: false
 
+  ## @param ingress.className Name of the IngressClass cluster resource which defines which controller will implement the resource (e.g nginx)
+  className: ""
+
+  ## @param ingress.annotations Additional annotations for the Ingress resource
+  annotations: 
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    route.openshift.io/termination: "edge"
+
+  ## @param host Hostname to be used to expose the route to access the backstage application (e.g: backstage.IP.nip.io)
+  host: ""
+
+
 # name of instances
 name: backstage
 
@@ -31,7 +44,7 @@ postgres:
   ## Use presistent storage
   storage: 
     enabled: true
-    size: 2G
+    size: 2Gi
     #storageClass: "g2"
   database_user: postgres
   database_name: postgres
@@ -73,9 +86,8 @@ serviceAccount:
 
 ## There is a secret created via the template/
 backstage:
-  companyname: "My Company"
-  #baseUrl: 'https://backstage.apps-crc.testing'
-  baseUrl: 'https://backstage-backstage.apps.cluster-hbgsk.hbgsk.sandbox1818.opentlc.com'
+  companyname: "Red Hat Backstage Helm Chart"
+  baseUrl: ""
 
   ## Override Catalog with here
   catalog:

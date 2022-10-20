@@ -1,3 +1,4 @@
+{{- if .Values.route.enabled }}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -18,3 +19,4 @@ spec:
     name: {{ include "backstage.fullname" . }}
     weight: 100
   wildcardPolicy: None
+{{- end }}
