@@ -15,7 +15,7 @@ spec:
   ingressClassName: {{ .Values.ingress.className | quote }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ include "backstage.host" . }}
       http:
         paths:
           - path: /

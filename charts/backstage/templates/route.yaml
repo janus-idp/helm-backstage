@@ -6,9 +6,7 @@ metadata:
   labels:
     {{- include "backstage.labels" . | nindent 4 }}
 spec:
-{{- if .Values.route }}
-  host: {{ .Values.route.host }}
-{{- end }}
+  host: {{ include "backstage.host" . }}
   port:
     targetPort: http
   tls:

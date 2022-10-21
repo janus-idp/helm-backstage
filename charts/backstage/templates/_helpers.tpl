@@ -128,3 +128,11 @@ key: databasePassword
 {{- end }}
 {{- end }}
 
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define "backstage.host" -}}
+{{- default .Values.backstage.baseUrl | trimPrefix "https://" }}
+{{- end }}
+
+
