@@ -1,0 +1,20 @@
+{{- if .Values.route.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "backstage.fullname" . }}
+  labels:
+    {{- include "backstage.labels" . | nindent 4 }}
+spec:
+  host: {{ include "backstage.host" . }}
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: {{ include "backstage.fullname" . }}
+    weight: 100
+  wildcardPolicy: None
+{{- end }}

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: backstage
+description: A helm chart for deploying Backstage to Openshift 
+type: application
+version: 0.1.0
+appVersion: "v1.7.0"
+home: https://github.com/redhat-developer/helm-backstage
