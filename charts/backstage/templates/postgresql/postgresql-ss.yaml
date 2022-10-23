@@ -2,7 +2,8 @@
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: {{ include "backstage.fullname" . }}-postgresql
+  name: {{ include "backstage.postgresql.name" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "backstage.postgresql.labels" . | nindent 4 }}
 spec:
@@ -12,11 +13,12 @@ spec:
         {{- include "backstage.postgresql.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      name: {{ include "backstage.fullname" . }}-postgresql
+      name: {{ include "backstage.postgresql.name" . }}
       creationTimestamp: null
       labels:
         {{- include "backstage.postgresql.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "backstage.postgres.serviceAccountName" . }}
       containers:
         - name: postgresql
           env:
@@ -34,13 +36,14 @@ spec:
               name: postgresdb
 {{- end }}
           terminationMessagePolicy: File
-          image: "{{ .Values.postgres.image }}"
+          imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+          image: "{{ template "backstage.image" .Values.postgres.image }}"
       serviceAccount: {{ include "backstage.serviceAccountName" . }}
 {{- if .Values.postgres.storage.enabled }}
       volumes:
       - name: postgresdb
         persistentVolumeClaim:
-          claimName: {{ include "backstage.fullname" . }}-postgresql
+          claimName: {{ include "backstage.postgresql.name" . }}
 {{- end }}
-  serviceName: {{ include "backstage.fullname" . }}-postgresql
+  serviceName: {{ include "backstage.postgresql.name" . }}
 {{- end }}

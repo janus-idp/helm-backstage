@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "backstage.fullname" . }}
-  namespace: {{ .Release.Namespace | quote }}
+  namespace: {{ .Release.Namespace }}
   labels: 
     {{- include "backstage.labels" . | nindent 4 }}
 {{- if .Values.ingress.annotations }}
@@ -25,4 +25,10 @@ spec:
                 name: {{ include "backstage.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
+{{- if .Values.ingress.tls.secretName }}
+  tls:
+    - hosts:
+      - {{ include "backstage.host" . }}
+      secretName: {{ .Values.ingress.tls.secretName }}
+{{- end -}}
 {{- end }}
