@@ -6,8 +6,6 @@
     "title": "Root Schema",
     "required": [
         "replicaCount",
-        "image",
-        "imagePullSecrets",
         "nameOverride",
         "fullnameOverride",
         "service",
@@ -19,6 +17,37 @@
         "serviceAccount",
         "securityContext",
         "backstage"
+    ],
+    "oneOf": [
+        {
+            "required": [
+                "image"
+            ],
+            "properties": {
+                "build": {
+                    "properties": {
+                        "enabled": {
+                            "enum": [
+                                false
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "properties": {
+                "build": {
+                    "properties": {
+                        "enabled": {
+                            "enum": [
+                                true
+                            ]
+                        }
+                    }
+                }
+            }
+        }
     ],
     "properties": {
         "replicaCount": {
@@ -79,6 +108,77 @@
                     "registry": "ghcr.io",
                     "repository": "redhat-developer/redhat-backstage-build",
                     "version": "latest"
+                }
+            ]
+        },
+        "build": {
+            "type": "object",
+            "default": {},
+            "title": "The build Schema",
+            "required": [
+                "enabled"
+            ],
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "title": "The enabled Schema",
+                    "examples": [
+                        true
+                    ]
+                },
+                "ref": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The ref Schema",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "url": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The url Schema",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "contextDir": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The contextDir Schema",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "mode": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The mode Schema",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "dockerfilePath": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The dockerfilePath Schema",
+                    "examples": [
+                        ""
+                    ]
+                },
+                "sourceScripts": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The sourceScripts Schema",
+                    "examples": [
+                        ""
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "enabled": false
                 }
             ]
         },
@@ -914,6 +1014,15 @@
                 "version": "latest"
             },
             "imagePullSecrets": [],
+            "build": {
+                "enabled": false,
+                "ref": "master",
+                "uri": "https://github.com/backstage/demo.git",
+                "contextDir": "",
+                "mode": "source",
+                "dockerfilePath": "",
+                "sourceScripts": "https://raw.githubusercontent.com/redhat-developer/redhat-backstage-build/main/.s2i/bin/"
+            },
             "nameOverride": "",
             "fullnameOverride": "",
             "service": {

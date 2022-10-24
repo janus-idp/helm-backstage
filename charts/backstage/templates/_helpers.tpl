@@ -147,10 +147,18 @@ Expand the name of the chart.
 {{- default .Values.backstage.baseUrl | trimPrefix "https://" | trimPrefix "http://" }}
 {{- end }}
 
+{{- define "backstage.image" -}}
+{{- if .Values.build.enabled -}}
+{{ include "backstage.fullname" . }}:latest
+{{- else -}}
+{{ template "parseImage" .Values.image }}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Create the image path for the passed in image field
 */}}
-{{- define "backstage.image" -}}
+{{- define "parseImage" -}}
 {{- if eq (substr 0 7 .version) "sha256:" -}}
 {{- printf "%s/%s@%s" .registry .repository .version -}}
 {{- else -}}

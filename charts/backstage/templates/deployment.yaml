@@ -26,8 +26,10 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
 {{- end }}
-          image: "{{ template "backstage.image" .Values.image }}"
+          image: "{{ include "backstage.image" . }}"
+          {{- if not .Values.build.enabled }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- end }}
           command:
             - node
             - packages/backend

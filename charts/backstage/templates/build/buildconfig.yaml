@@ -1,0 +1,54 @@
+{{- if .Values.build.enabled }}
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    {{- include "backstage.labels" . | nindent 4 }}
+  name: {{ include "backstage.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "2Gi"
+  failedBuildsHistoryLimit: 5
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "{{ include "backstage.image" . }}"
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: {{ .Values.build.uri }}
+      ref: {{ .Values.build.ref }}
+    {{- if .Values.build.contextDir }}
+    contextDir: {{ .Values.build.contextDir }}
+    {{- end }}
+  strategy:
+    {{- if not (has .Values.build.mode (list "docker" "source")) }}
+    {{- fail "value 'build.mode' must be either 'docker' or 'source'" }}
+    {{- end }}
+    {{- if eq .Values.build.mode "docker" }}
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: {{ .Values.build.dockerfilePath | default "./Dockerfile "}}
+      {{- if .Values.build.pullSecret }}
+      pullSecret:
+        name: {{ .Values.build.pullSecret }}
+      {{- end }}
+    {{ else }}
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: "nodejs:latest"
+        namespace: openshift
+      {{- if  .Values.build.sourceScripts }}
+      scripts: {{ .Values.build.sourceScripts }}
+      {{- end }}
+    {{- end }}
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - type: ConfigChange
+{{- end }}
