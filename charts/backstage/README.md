@@ -1,6 +1,6 @@
 # backstage
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
 
 A helm chart for deploying Backstage
 
@@ -54,6 +54,7 @@ A helm chart for deploying Backstage
 | postgres.storage.size | string | `"2Gi"` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| route.annotations | object | `{}` |  |
 | route.enabled | bool | `true` |  |
 | route.termination | string | `"edge"` |  |
 | securityContext | object | `{}` |  |

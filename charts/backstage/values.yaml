@@ -20,6 +20,9 @@ route:
   enabled: true
   termination: edge
 
+  ## @param route.annotations Additional annotations for Route resource
+  annotations: {}
+
 ## When enabled the host will be derived from the backstage baseUrl so no property needed.
 ingress:
   enabled: false

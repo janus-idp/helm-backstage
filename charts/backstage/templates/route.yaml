@@ -6,6 +6,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "backstage.labels" . | nindent 4 }}
+  {{- if .Values.route.annotations }}
+  annotations:
+    {{- toYaml .Values.route.annotations | nindent 4 }}
+  {{- end }}
 spec:
   host: {{ include "backstage.host" . }}
   port:

@@ -167,6 +167,16 @@
                         true
                     ]
                 },
+                "annotations": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The annotations Schema",
+                    "required": [],
+                    "properties": {},
+                    "examples": [
+                        {}
+                    ]
+                },
                 "termination": {
                     "type": "string",
                     "default": "",
@@ -179,6 +189,7 @@
             "examples": [
                 {
                     "enabled": true,
+                    "annotations": {},
                     "termination": "edge"
                 }
             ]
@@ -917,6 +928,7 @@
             },
             "route": {
                 "enabled": true,
+                "annotations": {},
                 "termination": "edge"
             },
             "ingress": {
