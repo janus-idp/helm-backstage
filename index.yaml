@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  backstage:
+  - apiVersion: v2
+    appVersion: v1.7.0
+    created: "2022-10-24T13:27:12.796688696Z"
+    description: A helm chart for deploying Backstage
+    digest: 0235b968ee9f96c94c68966ed4a60f69fc73259a3a3e8cb4436876f33b3676c2
+    home: https://github.com/redhat-developer/helm-backstage
+    name: backstage
+    urls:
+    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.1/backstage-0.1.1.tgz
+    version: 0.1.1
+generated: "2022-10-24T13:27:12.796740295Z"
