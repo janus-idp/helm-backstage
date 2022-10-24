@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "backstage.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "backstage.labels" . | nindent 4 }}
 spec:
@@ -25,7 +26,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
 {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ template "backstage.image" .Values.image }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ['node', 'packages/backend', '--config', '/config/app-config.yaml']   
           env:
@@ -60,6 +61,6 @@ spec:
       volumes:
         - name: backstage-config
           secret:
-            secretName: backstage-config
+            secretName: {{ include "backstage.config.name" . }}
             defaultMode: 420
 

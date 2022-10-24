@@ -1,7 +1,10 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "backstage.fullname" . }}-config
+  name: {{ include "backstage.config.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "backstage.labels" . | nindent 4 }}
 stringData:
   app-config.yaml: |- 
     app:

@@ -2,7 +2,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "backstage.fullname" . }}-postgresql
+  name: {{ include "backstage.postgresql.name" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "backstage.postgresql.labels" . | nindent 4 }}
 spec:

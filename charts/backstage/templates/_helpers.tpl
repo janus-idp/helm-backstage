@@ -82,6 +82,18 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the service account to use
+*/}}
+{{- define "backstage.postgres.serviceAccountName" -}}
+{{- if .Values.postgres.serviceAccount.create }}
+{{- default (include "backstage.postgresql.name" .) .Values.postgres.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.postgres.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+
+{{/*
 Check for existing secret
 */}}
 {{- define "gen.postgres-password" -}}
@@ -111,7 +123,7 @@ Return the Postgres Database hostname
 {{- if .Values.postgres.database_host }}
 {{ .Values.postgres.database_host }}
 {{- else -}}
-{{ include "backstage.fullname" . }}-postgresql.{{ .Release.Namespace }}.svc
+{{ include "backstage.postgresql.name" . }}.{{ .Release.Namespace }}.svc
 {{- end -}}
 {{- end -}}
 
@@ -123,7 +135,7 @@ Check for existing secret
 name: {{ .Values.postgres.existingSecret }}
 key: {{ .Values.postgres.secretKeys.adminPasswordKey }}
 {{- else }}
-name: {{ include "backstage.fullname" . }}-postgresql
+name: {{ include "backstage.postgresql.name" . }}
 key: databasePassword
 {{- end }}
 {{- end }}
@@ -132,7 +144,30 @@ key: databasePassword
 Expand the name of the chart.
 */}}
 {{- define "backstage.host" -}}
-{{- default .Values.backstage.baseUrl | trimPrefix "https://" }}
+{{- default .Values.backstage.baseUrl | trimPrefix "https://" | trimPrefix "http://" }}
 {{- end }}
 
+{{/*
+Create the image path for the passed in image field
+*/}}
+{{- define "backstage.image" -}}
+{{- if eq (substr 0 7 .version) "sha256:" -}}
+{{- printf "%s/%s@%s" .registry .repository .version -}}
+{{- else -}}
+{{- printf "%s/%s:%s" .registry .repository .version -}}
+{{- end -}}
+{{- end -}}
 
+{{/*
+Create the postgresql name
+*/}}
+{{- define "backstage.postgresql.name" -}}
+{{- printf "%s-postgresql" (include "backstage.fullname" . ) }}
+{{- end }}
+
+{{/*
+Create the backstage config name
+*/}}
+{{- define "backstage.config.name" -}}
+{{- printf "%s-config" (include "backstage.fullname" . ) }}
+{{- end }}
