@@ -89,6 +89,20 @@ stringData:
         {{- toYaml . | nindent 6 }}
       {{- end }}
 
+    {{- if .Values.kubernetesPlugin.connectToLocal }}
+    kubernetes:
+      serviceLocatorMethod:
+        type: "multiTenant"
+      clusterLocatorMethods:
+        - type: "config"
+          clusters:
+            - url: https://openshift.default.svc.cluster.local
+              name: local-cluster
+              authProvider: "serviceAccount"
+              skipTLSVerify: true
+              skipMetricsLookup: false
+    {{- end }}
+
 {{- if .Values.additionalConfig }}
   additional-config.yaml: |
     {{- toYaml .Values.additionalConfig | nindent 4 }}

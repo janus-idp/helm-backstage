@@ -99,6 +99,11 @@ serviceAccount:
 
 securityContext: {}
 
+# Configuration of the Kubernetes plugin for Backstage
+kubernetesPlugin:
+  # Configure backstage to connect to your local cluster
+  connectToLocal: false
+
 ## There is a secret created via the template/
 backstage:
   companyname: "Red Hat Backstage Helm Chart"
