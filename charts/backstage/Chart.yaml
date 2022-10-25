@@ -1,6 +1,6 @@
 apiVersion: v2
 name: backstage
 description: A helm chart for deploying Backstage
-version: 0.1.1
+version: 0.1.2
 appVersion: "v1.7.0"
 home: https://github.com/redhat-developer/helm-backstage
