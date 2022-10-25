@@ -31,8 +31,7 @@ ingress:
   className: ""
 
   ## @param ingress.annotations Additional annotations for the Ingress resource
-  annotations:
-    route.openshift.io/termination: "edge"
+  annotations: {}
 
   tls:
     secretName: ""

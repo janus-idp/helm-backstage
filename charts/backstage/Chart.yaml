@@ -1,6 +1,9 @@
 apiVersion: v2
 name: backstage
 description: A helm chart for deploying Backstage
-version: 0.1.2
+version: 0.1.3
 appVersion: "v1.7.0"
+kubeVersion: ">= 1.19.0-0"
 home: https://github.com/redhat-developer/helm-backstage
+annotations:
+  charts.openshift.io/name: backstage

@@ -100,7 +100,7 @@ Check for existing secret
 {{- if .Values.postgres.database_password }}
 databasePassword: {{ .Values.postgres.database_password | quote }}
 {{- else -}}
-{{- $secret := lookup "v1" "Secret" .Release.Namespace  (include "backstage.fullname" . ) -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace  (include "backstage.postgresql.name" . ) -}}
 {{- if $secret -}}
 {{/*
    Reusing existing secret data

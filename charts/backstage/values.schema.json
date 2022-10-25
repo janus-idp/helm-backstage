@@ -156,7 +156,8 @@
             "title": "The route Schema",
             "required": [
                 "enabled",
-                "termination"
+                "termination",
+                "annotations"
             ],
             "properties": {
                 "enabled": {
@@ -165,6 +166,14 @@
                     "title": "The enabled Schema",
                     "examples": [
                         true
+                    ]
+                },
+                "termination": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The termination Schema",
+                    "examples": [
+                        "edge"
                     ]
                 },
                 "annotations": {
@@ -176,21 +185,13 @@
                     "examples": [
                         {}
                     ]
-                },
-                "termination": {
-                    "type": "string",
-                    "default": "",
-                    "title": "The termination Schema",
-                    "examples": [
-                        "edge"
-                    ]
                 }
             },
             "examples": [
                 {
                     "enabled": true,
-                    "annotations": {},
-                    "termination": "edge"
+                    "termination": "edge",
+                    "annotations": {}
                 }
             ]
         },
@@ -225,23 +226,10 @@
                     "type": "object",
                     "default": {},
                     "title": "The annotations Schema",
-                    "required": [
-                        "route.openshift.io/termination"
-                    ],
-                    "properties": {
-                        "route.openshift.io/termination": {
-                            "type": "string",
-                            "default": "",
-                            "title": "The route.openshift.io/termination Schema",
-                            "examples": [
-                                "edge"
-                            ]
-                        }
-                    },
+                    "required": [],
+                    "properties": {},
                     "examples": [
-                        {
-                            "route.openshift.io/termination": "edge"
-                        }
+                        {}
                     ]
                 },
                 "tls": {
@@ -272,9 +260,7 @@
                 {
                     "enabled": false,
                     "className": "",
-                    "annotations": {
-                        "route.openshift.io/termination": "edge"
-                    },
+                    "annotations": {},
                     "tls": {
                         "secretName": ""
                     }
@@ -928,15 +914,13 @@
             },
             "route": {
                 "enabled": true,
-                "annotations": {},
-                "termination": "edge"
+                "termination": "edge",
+                "annotations": {}
             },
             "ingress": {
                 "enabled": false,
                 "className": "",
-                "annotations": {
-                    "route.openshift.io/termination": "edge"
-                },
+                "annotations": {},
                 "tls": {
                     "secretName": ""
                 }
