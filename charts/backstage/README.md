@@ -1,10 +1,32 @@
 # backstage
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
 
 A helm chart for deploying Backstage
 
 **Homepage:** <https://github.com/redhat-developer/helm-backstage>
+
+## Installation
+
+This chart can be installed to an individual namespace by first adding the chart repository, creating a new namespace (or using an existing namespace) and installing the chart by executing the following commands:
+
+```shell
+helm repo add redhat-developer-backstage https://redhat-developer.github.io/helm-backstage
+helm create namespace backstage
+helm upgrade -i backstage -n backstage redhat-developer-backstage/backstage --set backstage.baseUrl=<BASE_URL>
+```
+
+The preceding command will create a new namespace called `backstage` and install the chart with a release name of `backstage`. At a minimum, the required parameter `backstage.baseUrl` refers to the URL that should be used to access the Backstage user interface.
+
+## Uninstallation
+
+To remove a previously installed chart, execute the following command:
+
+```shell
+helm uninstall <RELEASE>
+```
+
+Replace `<RELEASE>` with the name of the Helm release that was used when installing the chart.
 
 ## Values
 
@@ -25,7 +47,6 @@ A helm chart for deploying Backstage
 | image.repository | string | `"redhat-developer/redhat-backstage-build"` |  |
 | image.version | string | `"latest"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations."route.openshift.io/termination" | string | `"edge"` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.tls.secretName | string | `""` |  |
