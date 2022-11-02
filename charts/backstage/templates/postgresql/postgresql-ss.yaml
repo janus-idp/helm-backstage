@@ -7,7 +7,8 @@ metadata:
   labels:
     {{- include "backstage.postgresql.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.postgres.replicas }}
+  serviceName: {{ include "backstage.postgresql.name" . }}
   selector:
     matchLabels:
         {{- include "backstage.postgresql.selectorLabels" . | nindent 6 }}
@@ -33,17 +34,43 @@ spec:
 {{- if .Values.postgres.storage.enabled }}
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgresdb
+              name: data
 {{- end }}
           terminationMessagePolicy: File
           imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
           image: "{{ template "backstage.image" .Values.postgres.image }}"
       serviceAccount: {{ include "backstage.serviceAccountName" . }}
-{{- if .Values.postgres.storage.enabled }}
+{{- if not .Values.postgres.storage.enabled }}
       volumes:
-      - name: postgresdb
-        persistentVolumeClaim:
-          claimName: {{ include "backstage.postgresql.name" . }}
+      - name: data
+        emptyDir: {}
+{{- else }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        {{- if .Values.postgres.storage.annotations  }}
+        annotations:
+          {{- toYaml .Values.postgres.storage.annotations | nindent 10 }}
+        {{- end }}
+        labels:
+          {{- include "backstage.postgresql.labels" . | nindent 10 }}
+          {{- if .Values.postgres.storage.labels  }}
+              {{- toYaml .Values.postgres.storage.labels | nindent 10 }}
+          {{- end }}
+      spec:
+        accessModes:
+        {{- range .Values.postgres.storage.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.postgres.storage.size }}
+          {{- if .Values.postgres.storage.storageClass }}
+            storageClassName: "{{ .Values.postgres.storage.storageClass }}"
+          {{- end }}
+            {{- if .Values.postgres.storage.selector }}
+            selector:              
+              {{- toYaml .Values.postgres.storage.selector | nindent 14 }}
+            {{- end }}
 {{- end }}
-  serviceName: {{ include "backstage.postgresql.name" . }}
 {{- end }}

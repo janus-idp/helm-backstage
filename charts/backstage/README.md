@@ -1,6 +1,6 @@
 # backstage
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
 
 A helm chart for deploying Backstage
 
@@ -30,7 +30,7 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 
 ## Values
 
-| Key | Type | Default | Description |
+ Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | backstage.baseUrl | string | `""` |  |
 | backstage.catalog.locations[0].target | string | `"https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml"` |  |
@@ -47,6 +47,7 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | image.repository | string | `"redhat-developer/redhat-backstage-build"` |  |
 | image.version | string | `"latest"` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.tls.secretName | string | `""` |  |
@@ -63,6 +64,7 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | postgres.image.registry | string | `"quay.io"` |  |
 | postgres.image.repository | string | `"fedora/postgresql-13"` |  |
 | postgres.image.version | string | `"13"` |  |
+| postgres.replicas | int | `1` |  |
 | postgres.resources.limits.cpu | string | `"400m"` |  |
 | postgres.resources.limits.memory | string | `"596Mi"` |  |
 | postgres.resources.requests.cpu | string | `"100m"` |  |
@@ -71,8 +73,13 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | postgres.serviceAccount.annotations | object | `{}` |  |
 | postgres.serviceAccount.create | bool | `true` |  |
 | postgres.serviceAccount.name | string | `""` |  |
+| postgres.storage.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| postgres.storage.annotations | object | `{}` |  |
 | postgres.storage.enabled | bool | `true` |  |
+| postgres.storage.labels | object | `{}` |  |
+| postgres.storage.selector | object | `{}` |  |
 | postgres.storage.size | string | `"2Gi"` |  |
+| postgres.storage.storageClass | string | `""` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | route.annotations | object | `{}` |  |
@@ -85,3 +92,5 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+
+----------------------------------------------
