@@ -28,9 +28,17 @@ spec:
 {{- end }}
           image: "{{ template "backstage.image" .Values.image }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ['node', 'packages/backend', '--config', '/config/app-config.yaml']   
+          command:
+            - node
+            - packages/backend
+            - --config
+            - /config/app-config.yaml
+            {{- if .Values.additionalConfig }}
+            - --config
+            - /config/additional-config.yaml
+            {{- end }}
           env:
-          - name: POSTGRES_ADMIN_PASSWORD  
+          - name: POSTGRES_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
                 {{- include "backstage.postgresql.adminSecretKey" . | indent 16 }}
