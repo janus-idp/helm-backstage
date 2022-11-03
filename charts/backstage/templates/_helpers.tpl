@@ -121,9 +121,9 @@ Return the Postgres Database hostname
 */}}
 {{- define "backstage.postgresql.host" -}}
 {{- if .Values.postgres.database_host }}
-{{ .Values.postgres.database_host }}
+{{- .Values.postgres.database_host }}
 {{- else -}}
-{{ include "backstage.postgresql.name" . }}.{{ .Release.Namespace }}.svc
+{{- include "backstage.postgresql.name" . }}.{{ .Release.Namespace }}.svc
 {{- end -}}
 {{- end -}}
 
