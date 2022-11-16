@@ -5,6 +5,19 @@ entries:
       charts.openshift.io/name: backstage
     apiVersion: v2
     appVersion: v1.7.0
+    created: "2022-11-16T21:02:08.476550702Z"
+    description: A helm chart for deploying Backstage
+    digest: 91f783f6711767e4fa330b8cda351e308cdf0037deece90672afa4775fdec86a
+    home: https://github.com/redhat-developer/helm-backstage
+    kubeVersion: '>= 1.19.0-0'
+    name: backstage
+    urls:
+    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.4/backstage-0.1.4.tgz
+    version: 0.1.4
+  - annotations:
+      charts.openshift.io/name: backstage
+    apiVersion: v2
+    appVersion: v1.7.0
     created: "2022-10-26T17:26:04.037111289Z"
     description: A helm chart for deploying Backstage
     digest: ec1f1785f833cd448c8a6b9f2ebc6e976ffe7469a7de432df53ea5ffe97b8659
@@ -34,4 +47,4 @@ entries:
     urls:
     - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.1/backstage-0.1.1.tgz
     version: 0.1.1
-generated: "2022-10-26T17:26:04.037128789Z"
+generated: "2022-11-16T21:02:08.476832503Z"
