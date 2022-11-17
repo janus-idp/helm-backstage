@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "backstage.labels" . | nindent 4 }}
 stringData:
-  app-config.yaml: |- 
+  app-config.yaml: |
     app:
       # Should be the same as backend.baseUrl when using the `app-backend` plugin.
       #baseUrl: http://{{ .Release.Name }}:7007
@@ -88,3 +88,8 @@ stringData:
       {{- with .Values.backstage.catalog }}
         {{- toYaml . | nindent 6 }}
       {{- end }}
+
+{{- if .Values.additionalConfig }}
+  additional-config.yaml: |
+    {{- toYaml .Values.additionalConfig | nindent 4 }}
+{{- end }}

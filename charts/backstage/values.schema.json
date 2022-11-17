@@ -893,6 +893,15 @@
                     }
                 }
             ]
+        },
+        "additionalConfig": {
+            "type": "object",
+            "default": {},
+            "title": "Additional Backstage configuration",
+            "properties": {},
+            "examples": [
+                {}
+            ]
         }
     },
     "examples": [
@@ -992,7 +1001,8 @@
                         }
                     ]
                 }
-            }
+            },
+            "additionalConfig": {}
         }
     ]
 }

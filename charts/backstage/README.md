@@ -1,6 +1,6 @@
 # backstage
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
+![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
 
 A helm chart for deploying Backstage
 
@@ -32,6 +32,7 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| additionalConfig | object | `{}` |  |
 | backstage.baseUrl | string | `""` |  |
 | backstage.catalog.locations[0].target | string | `"https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml"` |  |
 | backstage.catalog.locations[0].type | string | `"url"` |  |

@@ -152,3 +152,8 @@ backstage:
       #   target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
       #   rules:
       #     - allow: [Template]
+
+# Provide additional configuration to Backstage.
+# This configuration takes precedence over defaults introduced by this chart.
+# Nested properties are merged with defaults.
+additionalConfig: {}
