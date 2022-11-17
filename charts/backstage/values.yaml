@@ -41,11 +41,17 @@ name: backstage
 
 postgres:
   external: false
+  replicas: 1
   ## Use persistent storage
   storage:
     enabled: true
     size: 2Gi
-    # storageClass: "g2"
+    labels: {}
+    annotations: {}
+    storageClass: ""
+    selector: {}
+    accessModes:
+      - ReadWriteOnce
   database_user: postgres
   database_name: postgres
   ## If using external db set the host
