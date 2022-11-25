@@ -8,11 +8,11 @@ entries:
     created: "2022-11-17T06:26:36.76929857Z"
     description: A helm chart for deploying Backstage
     digest: f66907f92a6088a7ee62298b9810338bda1bc5e28c56d4e3b9d67133237eb396
-    home: https://github.com/redhat-developer/helm-backstage
+    home: https://github.com/janus-idp/helm-backstage
     kubeVersion: '>= 1.19.0-0'
     name: backstage
     urls:
-    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.5/backstage-0.1.5.tgz
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.5/backstage-0.1.5.tgz
     version: 0.1.5
   - annotations:
       charts.openshift.io/name: backstage
@@ -21,11 +21,11 @@ entries:
     created: "2022-11-16T21:02:08.476550702Z"
     description: A helm chart for deploying Backstage
     digest: 91f783f6711767e4fa330b8cda351e308cdf0037deece90672afa4775fdec86a
-    home: https://github.com/redhat-developer/helm-backstage
+    home: https://github.com/janus-idp/helm-backstage
     kubeVersion: '>= 1.19.0-0'
     name: backstage
     urls:
-    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.4/backstage-0.1.4.tgz
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.4/backstage-0.1.4.tgz
     version: 0.1.4
   - annotations:
       charts.openshift.io/name: backstage
@@ -34,30 +34,30 @@ entries:
     created: "2022-10-26T17:26:04.037111289Z"
     description: A helm chart for deploying Backstage
     digest: ec1f1785f833cd448c8a6b9f2ebc6e976ffe7469a7de432df53ea5ffe97b8659
-    home: https://github.com/redhat-developer/helm-backstage
+    home: https://github.com/janus-idp/helm-backstage
     kubeVersion: '>= 1.19.0-0'
     name: backstage
     urls:
-    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.3/backstage-0.1.3.tgz
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.3/backstage-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v2
     appVersion: v1.7.0
     created: "2022-10-25T03:41:39.147153445Z"
     description: A helm chart for deploying Backstage
     digest: a1916859573ddf613aa37b266ecf53d03dc5d16799c14cf767c1d1dba4361da8
-    home: https://github.com/redhat-developer/helm-backstage
+    home: https://github.com/janus-idp/helm-backstage
     name: backstage
     urls:
-    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.2/backstage-0.1.2.tgz
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.2/backstage-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v2
     appVersion: v1.7.0
     created: "2022-10-24T13:27:12.796688696Z"
     description: A helm chart for deploying Backstage
     digest: 0235b968ee9f96c94c68966ed4a60f69fc73259a3a3e8cb4436876f33b3676c2
-    home: https://github.com/redhat-developer/helm-backstage
+    home: https://github.com/janus-idp/helm-backstage
     name: backstage
     urls:
-    - https://github.com/redhat-developer/helm-backstage/releases/download/backstage-0.1.1/backstage-0.1.1.tgz
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.1/backstage-0.1.1.tgz
     version: 0.1.1
 generated: "2022-11-17T06:26:36.769338372Z"
