@@ -5,6 +5,19 @@ entries:
       charts.openshift.io/name: backstage
     apiVersion: v2
     appVersion: v1.7.0
+    created: "2022-11-25T17:24:04.821576148Z"
+    description: A helm chart for deploying Backstage
+    digest: 7becf2294280e6c00e52414fea4c23c27067559597a0bfc8cd0c9f0ea0de8cdb
+    home: https://github.com/janus-idp/helm-backstage
+    kubeVersion: '>= 1.19.0-0'
+    name: backstage
+    urls:
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.6/backstage-0.1.6.tgz
+    version: 0.1.6
+  - annotations:
+      charts.openshift.io/name: backstage
+    apiVersion: v2
+    appVersion: v1.7.0
     created: "2022-11-17T06:26:36.76929857Z"
     description: A helm chart for deploying Backstage
     digest: f66907f92a6088a7ee62298b9810338bda1bc5e28c56d4e3b9d67133237eb396
@@ -60,4 +73,4 @@ entries:
     urls:
     - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.1/backstage-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-17T06:26:36.769338372Z"
+generated: "2022-11-25T17:24:04.821879047Z"
