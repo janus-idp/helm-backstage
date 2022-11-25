@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   pullPolicy: Always
   registry: ghcr.io
-  repository: redhat-developer/redhat-backstage-build
+  repository: janus-idp/redhat-backstage-build
   version: "latest"
 
 imagePullSecrets: []

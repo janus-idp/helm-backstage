@@ -2,7 +2,7 @@
 Thank you for your contribution! Complete the following fields to provide insight into the changes being requested as well as steps that you can take to ensure it meets all of the requirements
 
 Please remember to:
-- mention any issue(s) that this PR closes using a closing keyword as well as the issue number, such as "Closes #XYZ" or "Resolves redhat-developer/repo-name#XYZ", cf.
+- mention any issue(s) that this PR closes using a closing keyword as well as the issue number, such as "Closes #XYZ" or "Resolves janus-idp/repo-name#XYZ", cf.
   [documentation](https://docs.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
 - ensure there are no merge commits!
 
