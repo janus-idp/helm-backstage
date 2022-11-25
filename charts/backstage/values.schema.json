@@ -61,7 +61,7 @@
                     "default": "",
                     "title": "The repository Schema",
                     "examples": [
-                        "redhat-developer/redhat-backstage-build"
+                        "janus-idp/redhat-backstage-build"
                     ]
                 },
                 "version": {
@@ -77,7 +77,7 @@
                 {
                     "pullPolicy": "Always",
                     "registry": "ghcr.io",
-                    "repository": "redhat-developer/redhat-backstage-build",
+                    "repository": "janus-idp/redhat-backstage-build",
                     "version": "latest"
                 }
             ]
@@ -910,7 +910,7 @@
             "image": {
                 "pullPolicy": "Always",
                 "registry": "ghcr.io",
-                "repository": "redhat-developer/redhat-backstage-build",
+                "repository": "janus-idp/redhat-backstage-build",
                 "version": "latest"
             },
             "imagePullSecrets": [],

@@ -1,19 +1,19 @@
 # backstage
 
-![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
+![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square) ![AppVersion: v1.7.0](https://img.shields.io/badge/AppVersion-v1.7.0-informational?style=flat-square)
 
 A helm chart for deploying Backstage
 
-**Homepage:** <https://github.com/redhat-developer/helm-backstage>
+**Homepage:** <https://github.com/janus-idp/helm-backstage>
 
 ## Installation
 
 This chart can be installed to an individual namespace by first adding the chart repository, creating a new namespace (or using an existing namespace) and installing the chart by executing the following commands:
 
 ```shell
-helm repo add redhat-developer-backstage https://redhat-developer.github.io/helm-backstage
+helm repo add janus-idp-backstage https://janus-idp.github.io/helm-backstage
 helm create namespace backstage
-helm upgrade -i backstage -n backstage redhat-developer-backstage/backstage --set backstage.baseUrl=<BASE_URL>
+helm upgrade -i backstage -n backstage janus-idp-backstage/backstage --set backstage.baseUrl=<BASE_URL>
 ```
 
 The preceding command will create a new namespace called `backstage` and install the chart with a release name of `backstage`. At a minimum, the required parameter `backstage.baseUrl` refers to the URL that should be used to access the Backstage user interface.
@@ -45,7 +45,7 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"redhat-developer/redhat-backstage-build"` |  |
+| image.repository | string | `"janus-idp/redhat-backstage-build"` |  |
 | image.version | string | `"latest"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.className | string | `""` |  |

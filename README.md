@@ -14,24 +14,24 @@ Charts are available in the following formats:
 The following command can be used to add the chart repository:
 
 ```shell
-helm repo add redhat-developer-backstage https://redhat-developer.github.io/helm-backstage
+helm repo add janus-idp-backstage https://janus-idp.github.io/helm-backstage
 helm repo update
 ```
 
 Once the chart has been added, install one of the available charts:
 
 ```shell
-helm upgrade -i <release_name> redhat-developer-backstage/backstage
+helm upgrade -i <release_name> janus-idp-backstage/backstage
 ```
 
 ### Installing from an OCI Registry
 
-Charts are also available in OCI format. The list of available charts can be found [here](https://github.com/redhat-developer?tab=packages&repo_name=helm-backstage).
+Charts are also available in OCI format. The list of available charts can be found [here](https://github.com/janus-idp?tab=packages&repo_name=helm-backstage).
 
 Install one of the available charts:
 
 ```shell
-helm upgrade -i oci://ghcr.io/redhat-developer/helm-backstage/backstage --version=<version>
+helm upgrade -i oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>
 ```
 
 ## Backstage Chart
