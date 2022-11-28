@@ -48,9 +48,11 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | image.repository | string | `"janus-idp/redhat-backstage-build"` |  |
 | image.version | string | `"latest"` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.tls.secretName | string | `""` |  |
+| kubernetesPlugin.connectToLocal | bool | `false` |  |
 | name | string | `"backstage"` |  |
 | nameOverride | string | `""` |  |
 | postgres.database_host | string | `""` |  |

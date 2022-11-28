@@ -18,6 +18,7 @@
         "resources",
         "serviceAccount",
         "securityContext",
+        "kubernetesPlugin",
         "backstage"
     ],
     "properties": {
@@ -699,6 +700,29 @@
                 {}
             ]
         },
+        "kubernetesPlugin": {
+            "type": "object",
+            "default": {},
+            "title": "Configuration of the Kubernetes plugin for Backstage",
+            "required": [
+                "connectToLocal"
+            ],
+            "properties": {
+                "connectToLocal": {
+                    "type": "boolean",
+                    "default": false,
+                    "title": "Configure the Backstage instance to connect to the local cluster",
+                    "examples": [
+                        true
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "connectToLocal": true
+                }
+            ]
+        },
         "backstage": {
             "type": "object",
             "default": {},
@@ -979,6 +1003,9 @@
                 "name": ""
             },
             "securityContext": {},
+            "kubernetesPlugin": {
+                "connectToLocal": false
+            },
             "backstage": {
                 "companyname": "Red Hat Backstage Helm Chart",
                 "baseUrl": "",

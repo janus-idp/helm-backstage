@@ -1,0 +1,14 @@
+{{- if .Values.kubernetesPlugin.connectToLocal }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "backstage.fullname" . }}-{{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "backstage.fullname" . }}-{{ .Release.Namespace }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "backstage.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
