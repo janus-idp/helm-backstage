@@ -42,6 +42,13 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | backstage.catalog.rules[0].allow[3] | string | `"Resource"` |  |
 | backstage.catalog.rules[0].allow[4] | string | `"Location"` |  |
 | backstage.companyname | string | `"Red Hat Backstage Helm Chart"` |  |
+| build.contextDir | string | `""` |  |
+| build.dockerfilePath | string | `""` |  |
+| build.enabled | bool | `true` |  |
+| build.mode | string | `"source"` |  |
+| build.ref | string | `"master"` |  |
+| build.sourceScripts | string | `"https://raw.githubusercontent.com/redhat-developer/redhat-backstage-build/main/.s2i/bin/"` |  |
+| build.uri | string | `"https://github.com/backstage/demo.git"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.registry | string | `"ghcr.io"` |  |

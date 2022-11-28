@@ -6,6 +6,22 @@ image:
   repository: janus-idp/redhat-backstage-build
   version: "latest"
 
+build:
+  ## If set to true the "image" section is ignored. Instead the image is built in cluster
+  enabled: false
+  ## Git reference for the source repository
+  ref: master
+  ## URI to the source repository
+  uri: https://github.com/backstage/demo.git
+  ## Optional path within the repository. Defaults to repository root.
+  contextDir: ""
+  ## Build mode selector, either set to "docker" to build from a local (in repo) Dockerfile or to "source" to build via source-to-image
+  mode: "source"
+  ## Custom path to the Dockerfile. Defaults to current context path within the repo. Applicable only if mode == "docker"
+  dockerfilePath: ""
+  ## Optional custom path to source-to-image assemble/run/etc. scripts. If set to blank, scripts need to be defined in your source repository
+  sourceScripts: "https://raw.githubusercontent.com/redhat-developer/redhat-backstage-build/main/.s2i/bin/"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
