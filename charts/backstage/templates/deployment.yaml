@@ -48,6 +48,9 @@ spec:
             value: "{{ .Values.postgres.database_user }}"
           - name: POSTGRES_PORT
             value: "{{ .Values.postgres.database_port }}"
+          {{- with .Values.backstage.additionalEnvironmentVariables }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}

@@ -38,7 +38,6 @@ spec:
           terminationMessagePolicy: File
           imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
           image: "{{ template "backstage.image" .Values.postgres.image }}"
-      serviceAccount: {{ include "backstage.serviceAccountName" . }}
 {{- if .Values.postgres.storage.enabled }}
       volumes:
       - name: postgresdb

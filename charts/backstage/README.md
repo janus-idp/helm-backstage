@@ -33,6 +33,9 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | additionalConfig | object | `{}` |  |
+| backstage.additionalEnvironmentVariables[0].name | string | `"KUBERNETES_TOKEN"` |  |
+| backstage.additionalEnvironmentVariables[0].valueFrom.secretKeyRef.key | string | `"token"` |  |
+| backstage.additionalEnvironmentVariables[0].valueFrom.secretKeyRef.name | string | `"my-kube-secret"` |  |
 | backstage.baseUrl | string | `""` |  |
 | backstage.catalog.locations[0].target | string | `"https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml"` |  |
 | backstage.catalog.locations[0].type | string | `"url"` |  |
@@ -48,6 +51,7 @@ Replace `<RELEASE>` with the name of the Helm release that was used when install
 | image.repository | string | `"janus-idp/redhat-backstage-build"` |  |
 | image.version | string | `"latest"` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.tls.secretName | string | `""` |  |
