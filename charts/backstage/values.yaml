@@ -101,6 +101,12 @@ securityContext: {}
 
 ## There is a secret created via the template/
 backstage:
+  additionalEnvironmentVariables: 
+  - name: KUBERNETES_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: my-kube-secret
+        key: token
   companyname: "Red Hat Backstage Helm Chart"
   baseUrl: ""
 
