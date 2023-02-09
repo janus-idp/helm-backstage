@@ -1,9 +1,16 @@
-
 # Janus-IDP Backstage Helm Chart
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+{{ template "chart.deprecationWarning" . }}
 
-A Helm chart for deploying a Backstage application
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
 
 ---
 
@@ -77,15 +84,6 @@ helm uninstall my-backstage-release
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-## Requirements
+{{ template "chart.requirementsSection" . }}
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://backstage.github.io/charts | upstream(backstage) | 0.x.x |
-
-## Values
-
-| Key | Description | Type | Default |
-|-----|-------------|------|---------|
-| upstream | Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml) | object | `{}` |
-
+{{ template "chart.valuesSection" . }}
