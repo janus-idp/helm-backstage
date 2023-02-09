@@ -1,0 +1,56 @@
+{{- if .Values.route.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: backstage
+    {{- if .Values.upstream.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.upstream.commonAnnotations .Values.route.annotations }}
+  annotations:
+    {{- if .Values.route.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.route.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.upstream.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+{{- if .Values.route.host }}
+  host: {{ tpl .Values.route.host . }}
+{{- end }}
+{{- if .Values.route.path }}
+  path: {{ .Values.route.path }}
+{{- end }}
+  port:
+    targetPort: {{ .Values.upstream.service.ports.name }}
+{{- if .Values.route.tls.enabled }}
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.tls.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.route.tls.termination }}
+    {{- if .Values.route.tls.key }}
+    key: |
+      {{- .Values.route.tls.key | nindent 6 }}
+    {{- end }}
+    {{- if .Values.route.tls.certificate }}
+    certificate: |
+      {{- .Values.route.tls.certificate | nindent 6 }}
+    {{- end }}
+    {{- if .Values.route.tls.caCertificate }}
+    caCertificate: |
+      {{- .Values.route.tls.caCertificate | nindent 6 }}
+    {{- end }}
+    {{- if .Values.route.tls.destinationCACertificate }}
+    destinationCACertificate: |
+      {{- .Values.route.tls.destinationCACertificate | nindent 6 }}
+    {{- end }}
+{{- end }}
+  to:
+    kind: Service
+    name: {{ include "common.names.fullname" .Subcharts.upstream }}
+    weight: 100
+  wildcardPolicy: {{ .Values.route.wildcardPolicy }}
+{{- end }}

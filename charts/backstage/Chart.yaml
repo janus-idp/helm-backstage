@@ -18,7 +18,12 @@ type: application
 version: 1.0.0
 
 dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 1.x.x
   - name: backstage
     repository: https://backstage.github.io/charts
-    version: 0.x.x
+    version: ">=0.18.0"
     alias: upstream

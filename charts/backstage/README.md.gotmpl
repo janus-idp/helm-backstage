@@ -87,3 +87,42 @@ The command removes all the Kubernetes components associated with the chart and 
 {{ template "chart.requirementsSection" . }}
 
 {{ template "chart.valuesSection" . }}
+
+## Features
+
+This charts defaults to using the Janus-IDP built image for backstage that is OpenShift compatible:
+
+```
+quay.io/janus-idp/redhat-backstage-build:latest
+```
+
+Additionally this chart enhances the upstream Backstage chart with following OpenShift-specific features.
+
+### OpenShift Routes
+
+This chart offers a drop-in replacement for the `Ingress` resource already provided by the upstream chart via an OpenShift `Route`.
+
+Please enable it using following values:
+
+```yaml
+# values.yaml
+upstream:
+  backstage:
+    extraEnvVars:
+      - name: "APP_CONFIG_app_baseUrl"
+        value: "https://{{"{{"}} .Values.global.host {{"}}"}}"
+      - name: "APP_CONFIG_backend_baseUrl"
+        value: "https://{{"{{"}} .Values.global.host {{"}}"}}"
+      - name: "APP_CONFIG_backend_cors_origin"
+        value: "https://{{"{{"}} .Values.global.host {{"}}"}}"
+  ingress:
+    enabled: false
+route:
+  enabled: true
+  host: "{{"{{"}} .Values.global.host {{"}}"}}"
+  tls:
+    enabled: true
+
+global:
+  host: backstage.apps.example.com
+```
