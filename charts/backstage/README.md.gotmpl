@@ -1,9 +1,16 @@
-
 # Janus-IDP Backstage Helm Chart
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+{{ template "chart.deprecationWarning" . }}
 
-A Helm chart for deploying a Backstage application
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
 
 ---
 
@@ -77,32 +84,9 @@ helm uninstall my-backstage-release
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-## Requirements
+{{ template "chart.requirementsSection" . }}
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://backstage.github.io/charts | upstream(backstage) | >=0.18.0 |
-| https://charts.bitnami.com/bitnami | common | 1.x.x |
-
-## Values
-
-| Key | Description | Type | Default |
-|-----|-------------|------|---------|
-| route | OpenShift Route parameters | object | `{"annotations":{},"enabled":false,"host":"","path":"/","tls":{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":false,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"},"wildcardPolicy":"None"}` |
-| route.annotations | Route specific annotations | object | `{}` |
-| route.enabled | Enable the creation of the route resource | bool | `false` |
-| route.host | Set the host attribute to a custom value. If not set, OpenShift will generate it, please make sure to match your baseUrl | string | `""` |
-| route.path | Path that the router watches for, to route traffic for to the service. | string | `"/"` |
-| route.tls | Route TLS parameters <br /> Ref: https://docs.openshift.com/container-platform/4.9/networking/routes/secured-routes.html | object | `{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":false,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"}` |
-| route.tls.caCertificate | Cert authority certificate contents. Optional | string | `""` |
-| route.tls.certificate | Certificate contents | string | `""` |
-| route.tls.destinationCACertificate | Contents of the ca certificate of the final destination. <br /> When using reencrypt termination this file should be provided in order to have routers use it for health checks on the secure connection. If this field is not specified, the router may provide its own destination CA and perform hostname validation using the short service name (service.namespace.svc), which allows infrastructure generated certificates to automatically verify. | string | `""` |
-| route.tls.enabled | Enable TLS configuration for the host defined at `route.host` parameter | bool | `false` |
-| route.tls.insecureEdgeTerminationPolicy | Indicates the desired behavior for insecure connections to a route. <br /> While each router may make its own decisions on which ports to expose, this is normally port 80. The only valid values are None, Redirect, or empty for disabled. | string | `"Redirect"` |
-| route.tls.key | Key file contents | string | `""` |
-| route.tls.termination | Specify TLS termination. | string | `"edge"` |
-| route.wildcardPolicy | Wildcard policy if any for the route. Currently only 'Subdomain' or 'None' is allowed. | string | `"None"` |
-| upstream | Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml) | object | Use Openshift compatible settings |
+{{ template "chart.valuesSection" . }}
 
 ## Features
 
@@ -126,16 +110,16 @@ upstream:
   backstage:
     extraEnvVars:
       - name: "APP_CONFIG_app_baseUrl"
-        value: "https://{{ .Values.global.host }}"
+        value: "https://{{"{{"}} .Values.global.host {{"}}"}}"
       - name: "APP_CONFIG_backend_baseUrl"
-        value: "https://{{ .Values.global.host }}"
+        value: "https://{{"{{"}} .Values.global.host {{"}}"}}"
       - name: "APP_CONFIG_backend_cors_origin"
-        value: "https://{{ .Values.global.host }}"
+        value: "https://{{"{{"}} .Values.global.host {{"}}"}}"
   ingress:
     enabled: false
 route:
   enabled: true
-  host: "{{ .Values.global.host }}"
+  host: "{{"{{"}} .Values.global.host {{"}}"}}"
   tls:
     enabled: true
 
