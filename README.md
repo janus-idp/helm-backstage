@@ -1,4 +1,4 @@
-# Red Hat Developer Backstage Helm Repository
+# Janus IDP Backstage Helm Repository
 
 This branch contains the assets associated to serve the static helm index and chart files
 
