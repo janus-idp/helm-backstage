@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # pin@v3
 
-      - uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # pin@v4
+      - uses: actions/setup-python@3091b37310257c35e28f059cf05d8c8c74250b17 # pin@v4
         with:
           python-version: 3.7
 
@@ -41,7 +41,7 @@ jobs:
         with:
           version: v3.10.0
 
-      - uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435 # pin@v4
+      - uses: actions/setup-python@3091b37310257c35e28f059cf05d8c8c74250b17 # pin@v4
         with:
           python-version: 3.7
 
