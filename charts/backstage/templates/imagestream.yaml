@@ -1,0 +1,24 @@
+{{- if .Values.build.enabled }}
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: backstage
+    {{- if .Values.upstream.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.upstream.commonAnnotations .Values.build.imageStream.annotations }}
+  annotations:
+    {{- if .Values.build.imageStream.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.build.imageStream.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.upstream.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  lookupPolicy:
+    local: true
+{{- end }}

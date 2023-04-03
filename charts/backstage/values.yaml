@@ -108,3 +108,83 @@ route:
     # --  Indicates the desired behavior for insecure connections to a route.
     # <br /> While each router may make its own decisions on which ports to expose, this is normally port 80. The only valid values are None, Redirect, or empty for disabled.
     insecureEdgeTerminationPolicy: "Redirect"
+
+
+# -- Build Backstage image in-cluster
+build:
+
+  # -- Enables creation of BuildConfig and ImageStream resources
+  enabled: false
+
+  # -- ImageStream specific values
+  imageStream:
+
+    # -- Additional annotations to apply to the ImageStream
+    annotations: {}
+
+  # --  BuildConfig specific values
+  buildConfig:
+
+    # -- Additional annotations to apply to the BuildConfig
+    annotations: {}
+
+    # -- Source repository URI
+    # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs
+    uri: "https://github.com/janus-idp/backstage-showcase.git"
+
+    # -- Source repository reference
+    # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs
+    ref: "main"
+
+    # -- Source repository context folder
+    # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs
+    contextDir: ""
+
+    # -- Secrets to be used when cloning the source repository
+    # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-adding-source-clone-secrets_creating-build-inputs
+    sourceSecretName: ""
+
+    # -- Amount of failed builds to keep in history
+    failedBuildsHistoryLimit: 5
+
+    # -- Amount of successful builds to keep in history
+    successfulBuildsHistoryLimit: 5
+
+    # -- Build timeout in seconds. Defaults to 30 minutes
+    completionDeadlineSeconds: 1800
+
+    # -- Resource requests/limits
+    # <br /> Ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "2Gi"
+
+    # -- Build strategy settings
+    strategy:
+
+      # -- Build strategy selector. This chart currently supports either "Source" or "Docker" values.
+      type: "Source"
+
+      # -- Source-to-image build strategy
+      source:
+
+        # -- Override S2I scripts by custom location. Defaults to Janus-IDP scripts that work for Backstage out of the box
+        # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/build-strategies.html#builds-strategy-s2i-override-builder-image-scripts_build-strategies-docker
+        scripts: "https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"
+
+      # -- Docker build strategy: Use Buildah to build a container image from a Dockerfile
+      docker:
+        # -- Pull secrets to be used for images referenced in Dockerfile
+        # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-docker-credentials-private-registries_creating-build-inputs
+        pullSecrets: []
+
+        # -- Path to dockerfile relative to contextDir
+        # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/build-strategies.html#builds-strategy-dockerfile-path_build-strategies
+        dockerfilePath: "./Dockerfile"
+
+    # -- Triggers that initiate a new build.
+    # <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/triggering-builds-build-hooks.html
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange

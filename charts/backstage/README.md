@@ -2,7 +2,7 @@
 # Janus-IDP Backstage Helm Chart
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 2.0.1](https://img.shields.io/badge/Version-2.0.1-informational?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
@@ -133,6 +133,28 @@ Kubernetes: `>= 1.19.0-0`
 
 | Key | Description | Type | Default |
 |-----|-------------|------|---------|
+| build | Build Backstage image in-cluster | object | `{"buildConfig":{"annotations":{},"completionDeadlineSeconds":1800,"contextDir":"","failedBuildsHistoryLimit":5,"ref":"main","resources":{"limits":{"cpu":"500m","memory":"2Gi"}},"sourceSecretName":"","strategy":{"docker":{"dockerfilePath":"./Dockerfile","pullSecrets":[]},"source":{"scripts":"https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"},"type":"Source"},"successfulBuildsHistoryLimit":5,"triggers":[{"type":"ConfigChange"},{"type":"ImageChange"}],"uri":"https://github.com/janus-idp/backstage-showcase.git"},"enabled":false,"imageStream":{"annotations":{}}}` |
+| build.buildConfig | BuildConfig specific values | object | `{"annotations":{},"completionDeadlineSeconds":1800,"contextDir":"","failedBuildsHistoryLimit":5,"ref":"main","resources":{"limits":{"cpu":"500m","memory":"2Gi"}},"sourceSecretName":"","strategy":{"docker":{"dockerfilePath":"./Dockerfile","pullSecrets":[]},"source":{"scripts":"https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"},"type":"Source"},"successfulBuildsHistoryLimit":5,"triggers":[{"type":"ConfigChange"},{"type":"ImageChange"}],"uri":"https://github.com/janus-idp/backstage-showcase.git"}` |
+| build.buildConfig.annotations | Additional annotations to apply to the BuildConfig | object | `{}` |
+| build.buildConfig.completionDeadlineSeconds | Build timeout in seconds. Defaults to 30 minutes | int | `1800` |
+| build.buildConfig.contextDir | Source repository context folder <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs | string | `""` |
+| build.buildConfig.failedBuildsHistoryLimit | Amount of failed builds to keep in history | int | `5` |
+| build.buildConfig.ref | Source repository reference <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs | string | `"main"` |
+| build.buildConfig.resources | Resource requests/limits <br /> Ref: https://kubernetes.io/docs/user-guide/compute-resources/ | object | `{"limits":{"cpu":"500m","memory":"2Gi"}}` |
+| build.buildConfig.sourceSecretName | Secrets to be used when cloning the source repository <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-adding-source-clone-secrets_creating-build-inputs | string | `""` |
+| build.buildConfig.strategy | Build strategy settings | object | `{"docker":{"dockerfilePath":"./Dockerfile","pullSecrets":[]},"source":{"scripts":"https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"},"type":"Source"}` |
+| build.buildConfig.strategy.docker | Docker build strategy: Use Buildah to build a container image from a Dockerfile | object | `{"dockerfilePath":"./Dockerfile","pullSecrets":[]}` |
+| build.buildConfig.strategy.docker.dockerfilePath | Path to dockerfile relative to contextDir <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/build-strategies.html#builds-strategy-dockerfile-path_build-strategies | string | `"./Dockerfile"` |
+| build.buildConfig.strategy.docker.pullSecrets | Pull secrets to be used for images referenced in Dockerfile <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-docker-credentials-private-registries_creating-build-inputs | list | `[]` |
+| build.buildConfig.strategy.source | Source-to-image build strategy | object | `{"scripts":"https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"}` |
+| build.buildConfig.strategy.source.scripts | Override S2I scripts by custom location. Defaults to Janus-IDP scripts that work for Backstage out of the box <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/build-strategies.html#builds-strategy-s2i-override-builder-image-scripts_build-strategies-docker | string | `"https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"` |
+| build.buildConfig.strategy.type | Build strategy selector. This chart currently supports either "Source" or "Docker" values. | string | `"Source"` |
+| build.buildConfig.successfulBuildsHistoryLimit | Amount of successful builds to keep in history | int | `5` |
+| build.buildConfig.triggers | Triggers that initiate a new build. <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/triggering-builds-build-hooks.html | list | `[{"type":"ConfigChange"},{"type":"ImageChange"}]` |
+| build.buildConfig.uri | Source repository URI <br /> Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs | string | `"https://github.com/janus-idp/backstage-showcase.git"` |
+| build.enabled | Enables creation of BuildConfig and ImageStream resources | bool | `false` |
+| build.imageStream | ImageStream specific values | object | `{"annotations":{}}` |
+| build.imageStream.annotations | Additional annotations to apply to the ImageStream | object | `{}` |
 | route | OpenShift Route parameters | object | `{"annotations":{},"enabled":true,"host":"","path":"/","tls":{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":true,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"},"wildcardPolicy":"None"}` |
 | route.annotations | Route specific annotations | object | `{}` |
 | route.enabled | Enable the creation of the route resource | bool | `true` |
@@ -210,3 +232,30 @@ route:
 global:
   host: backstage.apps.example.com
 ```
+
+### OpenShift Build
+
+In addition to providing a complete image for deployment, this feature allows user to refence a Backstage repository instead. This repository will be turned into an image in-cluster through OpenShift BuildConfig. In order to properly propagate the image to the Deployment, use following values as a baseline:
+
+```yaml
+upstream:
+  backstage:
+    image:
+      # Make the Deployment reference an image from local image registry in OpenShift
+      registry: ''
+      repository: '{{ .Release.Namespace }}/{{ include "common.names.fullname" . }}'
+
+    annotations:
+      # Enable rollouts when new image becomes available
+      image.openshift.io/triggers: |
+        [{"from":{"kind":"ImageStreamTag","name":"{{ include "common.names.fullname" . }}"},"fieldPath":"spec.template.spec.containers[0].image"}]
+
+    podAnnotations:
+      # Enables ImageStream lookup
+      alpha.image.policy.openshift.io/resolve-names: '*'
+
+build:
+  enabled: true
+```
+
+The process can be furtner customized through the `build` value in `values.yaml` file. For more details see [Values section](#values) above.

@@ -179,3 +179,30 @@ route:
 global:
   host: backstage.apps.example.com
 ```
+
+### OpenShift Build
+
+In addition to providing a complete image for deployment, this feature allows user to refence a Backstage repository instead. This repository will be turned into an image in-cluster through OpenShift BuildConfig. In order to properly propagate the image to the Deployment, use following values as a baseline:
+
+```yaml
+upstream:
+  backstage:
+    image:
+      # Make the Deployment reference an image from local image registry in OpenShift
+      registry: ''
+      repository: '{{"{{"}} .Release.Namespace {{"}}"}}/{{"{{"}} include "common.names.fullname" . {{"}}"}}'
+
+    annotations:
+      # Enable rollouts when new image becomes available
+      image.openshift.io/triggers: |
+        [{"from":{"kind":"ImageStreamTag","name":"{{"{{"}} include "common.names.fullname" . {{"}}"}}"},"fieldPath":"spec.template.spec.containers[0].image"}]
+
+    podAnnotations:
+      # Enables ImageStream lookup
+      alpha.image.policy.openshift.io/resolve-names: '*'
+
+build:
+  enabled: true
+```
+
+The process can be furtner customized through the `build` value in `values.yaml` file. For more details see [Values section](#values) above.

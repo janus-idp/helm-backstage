@@ -1,0 +1,66 @@
+{{- if .Values.build.enabled }}
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: backstage
+    {{- if .Values.upstream.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.upstream.commonAnnotations .Values.build.buildConfig.annotations }}
+  annotations:
+    {{- if .Values.build.buildConfig.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.build.buildConfig.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.upstream.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  resources:
+    {{- include "common.tplvalues.render" ( dict "value" .Values.build.buildConfig.resources "context" $) | nindent 4 }}
+  failedBuildsHistoryLimit: {{ .Values.build.buildConfig.failedBuildsHistoryLimit }}
+  successfulBuildsHistoryLimit: {{ .Values.build.buildConfig.successfulBuildsHistoryLimit }}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ include "common.names.fullname" . }}
+      namespace: {{ .Release.Namespace | quote }}
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: {{ .Values.build.buildConfig.uri }}
+      ref: {{ .Values.build.buildConfig.ref }}
+    {{- if .Values.build.buildConfig.contextDir }}
+    contextDir: {{ .Values.build.buildConfig.contextDir }}
+    {{- end }}
+    {{- if .Values.build.buildConfig.sourceSecretName }}
+    sourceSecret:
+      name: {{ .Values.build.buildConfig.sourceSecretName }}
+    {{- end }}
+  strategy:
+    {{- if not (has .Values.build.buildConfig.strategy.type (list "Docker" "Source")) }}
+    {{- fail "value 'build.buildConfig.type' must be either 'Docker' or 'Source'" }}
+    {{- end }}
+    {{- if eq .Values.build.buildConfig.strategy.type "Docker" }}
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: {{ .Values.build.buildConfig.strategy.docker.dockerfilePath }}
+      {{- include "janusIdp.renderImageBuildPullSecrets" . | nindent 6 }}
+    {{- else }}
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: "nodejs:latest"
+        namespace: openshift
+      {{- if  .Values.build.buildConfig.strategy.source.scripts }}
+      scripts: {{ .Values.build.buildConfig.strategy.source.scripts }}
+      {{- end }}
+    {{- end }}
+  triggers:
+    {{- include "common.tplvalues.render" ( dict "value" .Values.build.buildConfig.triggers "context" $ ) | nindent 4 }}
+{{- end }}

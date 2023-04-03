@@ -107,6 +107,194 @@
                     }
                 }
             }
+        },
+        "build": {
+            "title": "Build Backstage image in-cluster",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "title": "Enables creation of BuildConfig and ImageStream resources.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "imageStream": {
+                    "title": "ImageStream specific values",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "annotations": {
+                            "title": "Additional annotations to apply to the ImageStream",
+                            "type": "object",
+                            "default": {}
+                        }
+                    }
+                },
+                "buildConfig": {
+                    "title": "BuildConfig specific values",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "annotations": {
+                            "title": "Additional annotations to apply to the BuildConfig",
+                            "type": "object",
+                            "default": {}
+                        },
+                        "uri": {
+                            "title": "Source repository URI",
+                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs",
+                            "type": "string",
+                            "default": "https://github.com/janus-idp/backstage-showcase.git"
+                        },
+                        "ref": {
+                            "title": "Source repository reference",
+                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs",
+                            "type": "string",
+                            "default": "main",
+                            "examples": [
+                                "main",
+                                "HEAD",
+                                "feature-branch",
+                                "1a410e"
+                            ]
+                        },
+                        "contextDir": {
+                            "title": "Source repository context folder",
+                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-source-code_creating-build-inputs",
+                            "type": "string",
+                            "default": "",
+                            "examples": [
+                                "/",
+                                "folder/within/repository"
+                            ]
+                        },
+                        "sourceSecretName": {
+                            "title": "Secrets to be used when cloning the source repository",
+                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-adding-source-clone-secrets_creating-build-inputs",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "failedBuildsHistoryLimit": {
+                            "title": "Amount of failed builds to keep in history",
+                            "type": "integer",
+                            "default": 5,
+                            "minimum": 0
+                        },
+                        "successfulBuildsHistoryLimit": {
+                            "title": "Amount of successful builds to keep in history",
+                            "type": "integer",
+                            "default": 5,
+                            "minimum": 0
+                        },
+                        "completionDeadlineSeconds": {
+                            "title": "Build timeout in seconds",
+                            "description": "Defaults to 30 minutes",
+                            "type": "integer",
+                            "default": 1800,
+                            "minimum": 0
+                        },
+                        "resources": {
+                            "title": "Resource requests/limits",
+                            "description": "Ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container",
+                            "$ref": "https://kubernetesjsonschema.dev/master/_definitions.json#/definitions/io.k8s.api.core.v1.ResourceRequirements",
+                            "default": {
+                                "limits": {
+                                    "cpu": "500m",
+                                    "memory": "2Gi"
+                                }
+                            },
+                            "examples": [
+                                {
+                                    "limits": {
+                                        "memory": "1Gi",
+                                        "cpu": "1000m"
+                                    },
+                                    "requests": {
+                                        "memory": "250Mi",
+                                        "cpu": "100m"
+                                    }
+                                }
+                            ]
+                        },
+                        "strategy": {
+                            "title": "Build strategy settings",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "title": "Build strategy selector",
+                                    "type": "string",
+                                    "default": "Source",
+                                    "enum": [
+                                        "Source",
+                                        "Docker"
+                                    ]
+                                },
+                                "source": {
+                                    "title": "Source-to-image build strategy",
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "scripts": {
+                                            "title": "Override S2I scripts by custom location",
+                                            "description": "Defaults to Janus-IDP scripts that work for Backstage out of the box, ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/build-strategies.html#builds-strategy-s2i-override-builder-image-scripts_build-strategies-docker",
+                                            "default": "https://raw.githubusercontent.com/janus-idp/redhat-backstage-build/add-s2i/.s2i/bin/"
+                                        }
+                                    }
+                                },
+                                "docker": {
+                                    "title": "Docker build strategy",
+                                    "description": "Use Buildah to build a container image from a Dockerfile",
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "pullSecrets": {
+                                            "title": "Pull secrets to be used for images referenced in Dockerfile",
+                                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/creating-build-inputs.html#builds-docker-credentials-private-registries_creating-build-inputs",
+                                            "type": "array",
+                                            "default": []
+                                        },
+                                        "dockerfilePath": {
+                                            "title": "Path to dockerfile relative to contextDir",
+                                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/build-strategies.html#builds-strategy-dockerfile-path_build-strategies",
+                                            "default": "./Dockerfile"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "triggers": {
+                            "title": "Triggers that initiate a new build",
+                            "description": "Ref: https://docs.openshift.com/container-platform/4.12/cicd/builds/triggering-builds-build-hooks.html",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "ConfigChange",
+                                            "ImageChange",
+                                            "Generic",
+                                            "Bitbucket",
+                                            "GitHub",
+                                            "GitLab"
+                                        ]
+                                    }
+                                }
+                            },
+                            "default": [
+                                {
+                                    "type": "ConfigChange"
+                                },
+                                {
+                                    "type": "ImageChange"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     }
 }
