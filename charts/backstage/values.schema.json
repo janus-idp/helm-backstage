@@ -1,14 +1,112 @@
 {
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "http://example.com/example.json",
     "type": "object",
-    "default": {},
     "title": "Root Schema",
     "properties": {
         "upstream": {
+            "title": "Upstream Backstage chart schema.",
             "type": "object",
-            "default": {},
-            "title": "Upstream Backstage chart schema"
+            "default": {
+                "backstage": {
+                    "image": {
+                        "registry": "quay.io",
+                        "repository": "janus-idp/redhat-backstage-build",
+                        "tag": "latest"
+                    }
+                }
+            }
+        },
+        "route": {
+            "title": "OpenShift Route parameters.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "annotations": {
+                    "title": "Route specific annotations.",
+                    "type":  "object",
+                    "default": {}
+                },
+                "enabled": {
+                    "title": "Enable the creation of the route resource.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "host": {
+                    "title": "Set the host attribute to a custom value.",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "https://bakstage.example.com"
+                    ]
+                },
+                "path": {
+                    "title": "Path that the router watches for, to route traffic for to the service.",
+                    "type": "string",
+                    "default": "/"
+                },
+                "wildcardPolicy": {
+                    "title": "Wildcard policy if any for the route.",
+                    "type": "string",
+                    "default": "None",
+                    "enum": [
+                        "None",
+                        "Subdomain"
+                    ]
+                },
+                "tls": {
+                    "title": "Route TLS parameters.",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "enabled": {
+                            "title": "Enable TLS configuration for the host defined at `route.host` parameter.",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "termination": {
+                            "title": "Specify TLS termination.",
+                            "type": "string",
+                            "default": "edge",
+                            "enum": [
+                                "edge",
+                                "reencrypt",
+                                "passthrough"
+                            ]
+                        },
+                        "certificate": {
+                            "title": "Certificate contents.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "key": {
+                            "title": "Key file contents.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "caCertificate": {
+                            "title": "Cert authority certificate contents.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "destinationCACertificate": {
+                            "title": "Contents of the ca certificate of the final destination.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "insecureEdgeTerminationPolicy": {
+                            "title": "Indicates the desired behavior for insecure connections to a route.",
+                            "type": "string",
+                            "default": "Redirect",
+                            "enum": [
+                                "Redirect",
+                                "None",
+                                ""
+                            ]
+                        }
+                    }
+                }
+            }
         }
     }
 }

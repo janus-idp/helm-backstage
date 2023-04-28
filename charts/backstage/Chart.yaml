@@ -1,29 +1,44 @@
+annotations:
+  artifacthub.io/category: integration-delivery
+  artifacthub.io/license: Apache-2.0
+  artifacthub.io/links: |
+    - name: support
+      url: https://github.com/janus-idp/helm-backstage/issues
+    - name: Chart Source
+      url: https://github.com/janus-idp/helm-backstage
+    - name: Default Image Source
+      url: https://github.com/janus-idp/redhat-backstage-build
+  charts.openshift.io/name: Backstage
+  charts.openshift.io/provider: Janus-IDP
+  charts.openshift.io/supportURL: https://github.com/janus-idp/helm-backstage/issues
 apiVersion: v2
-name: backstage
 description: A Helm chart for deploying a Backstage application
-
-# A chart can be either an 'application' or a 'library' chart.
-#
-# Application charts are a collection of templates that can be packaged into versioned archives
-# to be deployed.
-#
-# Library charts provide useful utilities or functions for the chart developer. They're included as
-# a dependency of application charts to inject those utilities and functions into the rendering
-# pipeline. Library charts do not define any templates and therefore cannot be deployed.
-type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.0.0
-
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 1.x.x
+    version: 2.x.x
   - name: backstage
     repository: https://backstage.github.io/charts
-    version: ">=0.18.0"
+    version: ">=0.21.1"
     alias: upstream
+home: https://janus-idp.io
+icon: https://avatars.githubusercontent.com/u/117844786
+keywords:
+- backstage
+- idp
+- janus-idp
+maintainers:
+  - name: Janus-IDP
+    url: https://janus-idp.io
+name: backstage
+type: application
+sources:
+- https://github.com/janus-idp/helm-backstage
+- https://github.com/janus-idp/redhat-backstage-build
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 1.0.1
