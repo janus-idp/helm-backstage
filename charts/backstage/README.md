@@ -1,9 +1,22 @@
 
 # Janus-IDP Backstage Helm Chart
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
+
+**Homepage:** <https://janus-idp.io>
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| Janus-IDP |  | <https://janus-idp.io> |
+
+## Source Code
+
+* <https://github.com/janus-idp/helm-backstage>
+* <https://github.com/janus-idp/redhat-backstage-build>
 
 ---
 
@@ -81,8 +94,8 @@ The command removes all the Kubernetes components associated with the chart and 
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://backstage.github.io/charts | upstream(backstage) | >=0.18.0 |
-| https://charts.bitnami.com/bitnami | common | 1.x.x |
+| https://backstage.github.io/charts | upstream(backstage) | >=0.21.1 |
+| https://charts.bitnami.com/bitnami | common | 2.x.x |
 
 ## Values
 
