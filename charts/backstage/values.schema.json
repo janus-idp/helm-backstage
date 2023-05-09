@@ -6,7 +6,7 @@
     "properties": {
         "upstream": {
             "title": "Upstream Backstage chart schema.",
-            "type": "object",
+            "$ref": "https://raw.githubusercontent.com/backstage/charts/main/charts/backstage/values.schema.json",
             "default": {
                 "backstage": {
                     "image": {
