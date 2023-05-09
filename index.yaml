@@ -15,6 +15,51 @@ entries:
       charts.openshift.io/provider: Janus-IDP
       charts.openshift.io/supportURL: https://github.com/janus-idp/helm-backstage/issues
     apiVersion: v2
+    created: "2023-05-09T20:20:08.169069724Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - alias: upstream
+      name: backstage
+      repository: https://backstage.github.io/charts
+      version: '>=0.22.3'
+    description: A Helm chart for deploying a Backstage application
+    digest: 0633bb870521ce1b0cc03395bf8e2d0dd1fb255b3ffc359903a1f6107e6de59e
+    home: https://janus-idp.io
+    icon: https://avatars.githubusercontent.com/u/117844786
+    keywords:
+    - backstage
+    - idp
+    - janus-idp
+    kubeVersion: '>= 1.19.0-0'
+    maintainers:
+    - name: Janus-IDP
+      url: https://janus-idp.io
+    name: backstage
+    sources:
+    - https://github.com/janus-idp/helm-backstage
+    - https://github.com/janus-idp/redhat-backstage-build
+    type: application
+    urls:
+    - https://github.com/janus-idp/helm-backstage/releases/download/backstage-1.0.3/backstage-1.0.3.tgz
+    version: 1.0.3
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: support
+          url: https://github.com/janus-idp/helm-backstage/issues
+        - name: Chart Source
+          url: https://github.com/janus-idp/helm-backstage
+        - name: Default Image Source
+          url: https://github.com/janus-idp/redhat-backstage-build
+      charts.openshift.io/name: Backstage
+      charts.openshift.io/provider: Janus-IDP
+      charts.openshift.io/supportURL: https://github.com/janus-idp/helm-backstage/issues
+    apiVersion: v2
     created: "2023-05-09T13:11:23.226959167Z"
     dependencies:
     - name: common
@@ -181,4 +226,4 @@ entries:
     urls:
     - https://github.com/janus-idp/helm-backstage/releases/download/backstage-0.1.1/backstage-0.1.1.tgz
     version: 0.1.1
-generated: "2023-05-09T13:11:23.227352784Z"
+generated: "2023-05-09T20:20:08.169197126Z"
