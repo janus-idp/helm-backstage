@@ -2,7 +2,7 @@
 # Janus-IDP Backstage Helm Chart
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
@@ -18,7 +18,7 @@ A Helm chart for deploying a Backstage application
 ## Source Code
 
 * <https://github.com/janus-idp/helm-backstage>
-* <https://github.com/janus-idp/redhat-backstage-build>
+* <https://github.com/janus-idp/backstage-showcase>
 
 ---
 
@@ -68,7 +68,31 @@ The following command can be used to add the chart repository:
 helm repo add janus-idp https://janus-idp.github.io/helm-backstage
 ```
 
-Once the chart has been added, install one of the available charts:
+Once the chart has been added, install this chart. However before doing so, please review the default `values.yaml` and adjust as needed.
+
+- To get proper connection between frontend and backend of Backstage please update the `apps.example.com` to match your cluster host:
+
+   ```yaml
+   upstream:
+     backstage:
+       appConfig:
+         app:
+           baseUrl: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+         backend:
+           baseUrl: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+           cors:
+             origin: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+   ```
+
+- If your cluster doesn't provide PVCs, you should disable PostgreSQL persistence via:
+
+   ```yaml
+   upstream:
+     postgresql:
+       primary:
+         persistence:
+           enabled: false
+   ```
 
 ```console
 helm upgrade -i <release_name> janus-idp/backstage
@@ -102,38 +126,61 @@ Kubernetes: `>= 1.19.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://backstage.github.io/charts | upstream(backstage) | >=0.22.3 |
+| https://backstage.github.io/charts | upstream(backstage) | 1.x.x |
 | https://charts.bitnami.com/bitnami | common | 2.x.x |
 
 ## Values
 
 | Key | Description | Type | Default |
 |-----|-------------|------|---------|
-| route | OpenShift Route parameters | object | `{"annotations":{},"enabled":false,"host":"","path":"/","tls":{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":false,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"},"wildcardPolicy":"None"}` |
+| route | OpenShift Route parameters | object | `{"annotations":{},"enabled":true,"host":"","path":"/","tls":{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":true,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"},"wildcardPolicy":"None"}` |
 | route.annotations | Route specific annotations | object | `{}` |
-| route.enabled | Enable the creation of the route resource | bool | `false` |
+| route.enabled | Enable the creation of the route resource | bool | `true` |
 | route.host | Set the host attribute to a custom value. If not set, OpenShift will generate it, please make sure to match your baseUrl | string | `""` |
 | route.path | Path that the router watches for, to route traffic for to the service. | string | `"/"` |
-| route.tls | Route TLS parameters <br /> Ref: https://docs.openshift.com/container-platform/4.9/networking/routes/secured-routes.html | object | `{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":false,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"}` |
+| route.tls | Route TLS parameters <br /> Ref: https://docs.openshift.com/container-platform/4.9/networking/routes/secured-routes.html | object | `{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":true,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"}` |
 | route.tls.caCertificate | Cert authority certificate contents. Optional | string | `""` |
 | route.tls.certificate | Certificate contents | string | `""` |
 | route.tls.destinationCACertificate | Contents of the ca certificate of the final destination. <br /> When using reencrypt termination this file should be provided in order to have routers use it for health checks on the secure connection. If this field is not specified, the router may provide its own destination CA and perform hostname validation using the short service name (service.namespace.svc), which allows infrastructure generated certificates to automatically verify. | string | `""` |
-| route.tls.enabled | Enable TLS configuration for the host defined at `route.host` parameter | bool | `false` |
+| route.tls.enabled | Enable TLS configuration for the host defined at `route.host` parameter | bool | `true` |
 | route.tls.insecureEdgeTerminationPolicy | Indicates the desired behavior for insecure connections to a route. <br /> While each router may make its own decisions on which ports to expose, this is normally port 80. The only valid values are None, Redirect, or empty for disabled. | string | `"Redirect"` |
 | route.tls.key | Key file contents | string | `""` |
 | route.tls.termination | Specify TLS termination. | string | `"edge"` |
 | route.wildcardPolicy | Wildcard policy if any for the route. Currently only 'Subdomain' or 'None' is allowed. | string | `"None"` |
 | upstream | Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml) | object | Use Openshift compatible settings |
 
+## Opinionated Backstage deployment
+
+This chart defaults to an opinionated deployment of Backstage that provides user with a usable Backstage instance out of the box.
+
+Features enabled by the default chart configuration:
+
+1. Uses [janus-idp/backstage-showcase](https://github.com/janus-idp/backstage-showcase/) that pre-loads a lot of useful plugins and features
+2. Exposes a `Route` for easy access to the instance
+3. Enables OpenShift-compatible PostgreSQL database storage
+
+For additional instance features please consuls [documentation for `janus-idp/backstage-showcase`](https://github.com/janus-idp/backstage-showcase/).
+
+Additional features can be enabled by extending the default configuration at:
+
+```yaml
+upstream:
+  backstage:
+    appConfig:
+      # Inline app-config.yaml for the instance
+    extraEnvVars:
+      # Additional environment variables
+```
+
 ## Features
 
-This charts defaults to using the Janus-IDP built image for backstage that is OpenShift compatible:
+This charts defaults to using the Janus-IDP Backstage Showcase image that is OpenShift compatible:
 
 ```
-quay.io/janus-idp/redhat-backstage-build:latest
+quay.io/janus-idp/backstage-showcase:latest
 ```
 
-Additionally this chart enhances the upstream Backstage chart with following OpenShift-specific features.
+Additionally this chart enhances the upstream Backstage chart with following OpenShift-specific features:
 
 ### OpenShift Routes
 
