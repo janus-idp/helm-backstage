@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "common.names.fullname" . }}-test-connection"
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: backstage
+    {{- if .Values.upstream.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.upstream.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+      helm.sh/hook: test
+spec:
+  containers:
+    - name: curl
+      image: quay.io/curl/curl:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          curl --connect-timeout 5 --max-time 10 --retry 10 --retry-delay 10 --retry-max-time 30 --retry-all-errors {{ include "common.names.fullname" . }}:{{ .Values.upstream.service.ports.backend }}
+  restartPolicy: Never
