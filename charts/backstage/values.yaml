@@ -4,8 +4,59 @@ upstream:
   backstage:
     image:
       registry: quay.io
-      repository: janus-idp/redhat-backstage-build
+      repository: janus-idp/backstage-showcase
       tag: latest
+    command: []
+    # FIXME (tumido): USE POSTGRES_PASSWORD and POSTGRES_USER instead of POSTGRES_ADMIN_PASSWORD
+    # This is a hack. In {fedora,rhel}/postgresql images, regular user is forbidden
+    # from creating DBs in runtime. A single DB can be created ahead of time via
+    # POSTGRESQL_DATABASE env variable (in this case via
+    # upstream.postgresql.primary.extraEnvVars value), but this doesn't allow us to
+    # create multiple DBs. Since Backstage requires by default 5 different DBs, we
+    # can't accommodate that properly.
+    appConfig:
+      app:
+        # Please update to match host.
+        baseUrl: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+      backend:
+        baseUrl: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+        cors:
+          origin: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+        database:
+          connection:
+            password: ${POSTGRESQL_ADMIN_PASSWORD}
+            user: postgres
+    extraEnvVars:
+    - name: POSTGRESQL_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: postgres-password
+          name: "{{ .Release.Name }}-postgresql"
+
+  postgresql:
+    enabled: true
+    postgresqlDataDir: /var/lib/pgsql/data/userdata
+    image:
+      registry: quay.io
+      repository: fedora/postgresql-15
+      tag: latest
+    primary:
+      securityContext:
+        enabled: false
+      podSecurityContext:
+        enabled: false
+      containerSecurityContext:
+        enabled: false
+      persistence:
+        enabled: true
+        size: 1Gi
+        mountPath: /var/lib/pgsql/data
+      extraEnvVars:
+      - name: POSTGRESQL_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: "{{ .Release.Name }}-postgresql"
 
 
 # -- OpenShift Route parameters
@@ -15,7 +66,7 @@ route:
   annotations: {}
 
   # -- Enable the creation of the route resource
-  enabled: false
+  enabled: true
 
   # -- Set the host attribute to a custom value. If not set, OpenShift will generate it, please make sure to match your baseUrl
   host: ""
@@ -31,7 +82,7 @@ route:
   tls:
 
     # -- Enable TLS configuration for the host defined at `route.host` parameter
-    enabled: false
+    enabled: true
 
     # -- Specify TLS termination.
     termination: "edge"

@@ -62,7 +62,31 @@ The following command can be used to add the chart repository:
 helm repo add janus-idp https://janus-idp.github.io/helm-backstage
 ```
 
-Once the chart has been added, install one of the available charts:
+Once the chart has been added, install this chart. However before doing so, please review the default `values.yaml` and adjust as needed.
+
+- To get proper connection between frontend and backend of Backstage please update the `apps.example.com` to match your cluster host:
+
+   ```yaml
+   upstream:
+     backstage:
+       appConfig:
+         app:
+           baseUrl: 'https://{{"{{"}}- print .Release.Name "-" .Release.Namespace -{{"}}"}}.apps.example.com'
+         backend:
+           baseUrl: 'https://{{"{{"}}- print .Release.Name "-" .Release.Namespace -{{"}}"}}.apps.example.com'
+           cors:
+             origin: 'https://{{"{{"}}- print .Release.Name "-" .Release.Namespace -{{"}}"}}.apps.example.com'
+   ```
+
+- If your cluster doesn't provide PVCs, you should disable PostgreSQL persistence via:
+
+   ```yaml
+   upstream:
+     postgresql:
+       primary:
+         persistence:
+           enabled: false
+   ```
 
 ```console
 helm upgrade -i <release_name> janus-idp/backstage
@@ -94,15 +118,38 @@ The command removes all the Kubernetes components associated with the chart and 
 
 {{ template "chart.valuesSection" . }}
 
+## Opinionated Backstage deployment
+
+This chart defaults to an opinionated deployment of Backstage that provides user with a usable Backstage instance out of the box.
+
+Features enabled by the default chart configuration:
+
+1. Uses [janus-idp/backstage-showcase](https://github.com/janus-idp/backstage-showcase/) that pre-loads a lot of useful plugins and features
+2. Exposes a `Route` for easy access to the instance
+3. Enables OpenShift-compatible PostgreSQL database storage
+
+For additional instance features please consuls [documentation for `janus-idp/backstage-showcase`](https://github.com/janus-idp/backstage-showcase/).
+
+Additional features can be enabled by extending the default configuration at:
+
+```yaml
+upstream:
+  backstage:
+    appConfig:
+      # Inline app-config.yaml for the instance
+    extraEnvVars:
+      # Additional environment variables
+```
+
 ## Features
 
-This charts defaults to using the Janus-IDP built image for backstage that is OpenShift compatible:
+This charts defaults to using the Janus-IDP Backstage Showcase image that is OpenShift compatible:
 
 ```
-quay.io/janus-idp/redhat-backstage-build:latest
+quay.io/janus-idp/backstage-showcase:latest
 ```
 
-Additionally this chart enhances the upstream Backstage chart with following OpenShift-specific features.
+Additionally this chart enhances the upstream Backstage chart with following OpenShift-specific features:
 
 ### OpenShift Routes
 

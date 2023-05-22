@@ -7,7 +7,7 @@ annotations:
     - name: Chart Source
       url: https://github.com/janus-idp/helm-backstage
     - name: Default Image Source
-      url: https://github.com/janus-idp/redhat-backstage-build
+      url: https://github.com/janus-idp/backstage-showcase
   charts.openshift.io/name: Backstage
   charts.openshift.io/provider: Janus-IDP
   charts.openshift.io/supportURL: https://github.com/janus-idp/helm-backstage/issues
@@ -21,7 +21,7 @@ dependencies:
     version: 2.x.x
   - name: backstage
     repository: https://backstage.github.io/charts
-    version: ">=0.22.3"
+    version: "1.x.x"
     alias: upstream
 home: https://janus-idp.io
 icon: https://avatars.githubusercontent.com/u/117844786
@@ -37,9 +37,9 @@ name: backstage
 type: application
 sources:
 - https://github.com/janus-idp/helm-backstage
-- https://github.com/janus-idp/redhat-backstage-build
+- https://github.com/janus-idp/backstage-showcase
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.0.4
+version: 2.0.0
