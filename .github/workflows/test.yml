@@ -6,7 +6,7 @@ on:
       - "charts/**"
 
 jobs:
-  check-readme:
+  check-metadata:
     runs-on: ubuntu-latest
     env:
       GO111MODULE: on
@@ -27,7 +27,8 @@ jobs:
 
       - name: Run pre-commit
         uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # renovate: tag=v3.0.0
-
+        with:
+          extra_args: --show-diff-on-failure
   test:
     runs-on: ubuntu-latest
     steps:
