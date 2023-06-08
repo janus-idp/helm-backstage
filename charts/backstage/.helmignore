@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+# Templates files
+README.md.gotmpl
+values.schema.tmpll.json
