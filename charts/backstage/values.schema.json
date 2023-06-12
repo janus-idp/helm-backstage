@@ -1,6 +1,5 @@
 {
     "$id": "https://raw.githubusercontent.com/janus-idp/helm-backstage/main/charts/backstage/values.schema.json",
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "properties": {
         "route": {
             "additionalProperties": false,
@@ -94,7 +93,6 @@
             "type": "object"
         },
         "upstream": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
             "metrics": {
                 "additionalProperties": false,
                 "description": "Allows configuring your backstage instance as a scrape target for Prometheus. Ref: https://github.com/prometheus/prometheus",
@@ -148,7 +146,6 @@
                 "type": "object"
             },
             "postgresql": {
-                "$schema": "http://json-schema.org/schema#",
                 "properties": {
                     "architecture": {
                         "description": "Allowed values: `standalone` or `replication`",
@@ -399,7 +396,6 @@
                                 },
                                 "runAsGroup": {
                                     "description": "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                    "format": "int64",
                                     "type": "integer"
                                 },
                                 "runAsNonRoot": {
@@ -408,7 +404,6 @@
                                 },
                                 "runAsUser": {
                                     "description": "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                    "format": "int64",
                                     "type": "integer"
                                 },
                                 "seLinuxOptions": {
@@ -869,7 +864,6 @@
                                             },
                                             "failureThreshold": {
                                                 "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "httpGet": {
@@ -927,17 +921,14 @@
                                             },
                                             "initialDelaySeconds": {
                                                 "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "periodSeconds": {
                                                 "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "successThreshold": {
                                                 "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "tcpSocket": {
@@ -965,7 +956,6 @@
                                             },
                                             "timeoutSeconds": {
                                                 "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             }
                                         },
@@ -982,7 +972,6 @@
                                             "properties": {
                                                 "containerPort": {
                                                     "description": "Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.",
-                                                    "format": "int32",
                                                     "type": "integer"
                                                 },
                                                 "hostIP": {
@@ -991,7 +980,6 @@
                                                 },
                                                 "hostPort": {
                                                     "description": "Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.",
-                                                    "format": "int32",
                                                     "type": "integer"
                                                 },
                                                 "name": {
@@ -1035,7 +1023,6 @@
                                             },
                                             "failureThreshold": {
                                                 "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "httpGet": {
@@ -1093,17 +1080,14 @@
                                             },
                                             "initialDelaySeconds": {
                                                 "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "periodSeconds": {
                                                 "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "successThreshold": {
                                                 "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "tcpSocket": {
@@ -1131,7 +1115,6 @@
                                             },
                                             "timeoutSeconds": {
                                                 "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             }
                                         },
@@ -1212,7 +1195,6 @@
                                             },
                                             "runAsGroup": {
                                                 "description": "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                                "format": "int64",
                                                 "type": "integer"
                                             },
                                             "runAsNonRoot": {
@@ -1221,7 +1203,6 @@
                                             },
                                             "runAsUser": {
                                                 "description": "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                                "format": "int64",
                                                 "type": "integer"
                                             },
                                             "seLinuxOptions": {
@@ -1285,7 +1266,6 @@
                                             },
                                             "failureThreshold": {
                                                 "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "httpGet": {
@@ -1343,17 +1323,14 @@
                                             },
                                             "initialDelaySeconds": {
                                                 "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "periodSeconds": {
                                                 "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "successThreshold": {
                                                 "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "tcpSocket": {
@@ -1381,7 +1358,6 @@
                                             },
                                             "timeoutSeconds": {
                                                 "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             }
                                         },
@@ -1673,7 +1649,6 @@
                                             },
                                             "partition": {
                                                 "description": "The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as \"1\". Similarly, the volume partition for /dev/sda is \"0\" (or you can leave the property empty).",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "readOnly": {
@@ -1824,7 +1799,6 @@
                                         "properties": {
                                             "defaultMode": {
                                                 "description": "Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "items": {
@@ -1838,7 +1812,6 @@
                                                         },
                                                         "mode": {
                                                             "description": "Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                            "format": "int32",
                                                             "type": "integer"
                                                         },
                                                         "path": {
@@ -1908,7 +1881,6 @@
                                         "properties": {
                                             "defaultMode": {
                                                 "description": "Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "items": {
@@ -1935,7 +1907,6 @@
                                                         },
                                                         "mode": {
                                                             "description": "Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                            "format": "int32",
                                                             "type": "integer"
                                                         },
                                                         "path": {
@@ -2009,7 +1980,6 @@
                                             },
                                             "lun": {
                                                 "description": "Optional: FC target lun number",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "readOnly": {
@@ -2094,7 +2064,6 @@
                                             },
                                             "partition": {
                                                 "description": "The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as \"1\". Similarly, the volume partition for /dev/sda is \"0\" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "pdName": {
@@ -2200,7 +2169,6 @@
                                             },
                                             "lun": {
                                                 "description": "iSCSI Target Lun number.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "portals": {
@@ -2322,7 +2290,6 @@
                                         "properties": {
                                             "defaultMode": {
                                                 "description": "Mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "sources": {
@@ -2344,7 +2311,6 @@
                                                                             },
                                                                             "mode": {
                                                                                 "description": "Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                                                "format": "int32",
                                                                                 "type": "integer"
                                                                             },
                                                                             "path": {
@@ -2398,7 +2364,6 @@
                                                                             },
                                                                             "mode": {
                                                                                 "description": "Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                                                "format": "int32",
                                                                                 "type": "integer"
                                                                             },
                                                                             "path": {
@@ -2457,7 +2422,6 @@
                                                                             },
                                                                             "mode": {
                                                                                 "description": "Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                                                "format": "int32",
                                                                                 "type": "integer"
                                                                             },
                                                                             "path": {
@@ -2493,7 +2457,6 @@
                                                                 },
                                                                 "expirationSeconds": {
                                                                     "description": "ExpirationSeconds is the requested duration of validity of the service account token. As the token approaches expiration, the kubelet volume plugin will proactively rotate the service account token. The kubelet will start trying to rotate the token if the token is older than 80 percent of its time to live or if the token is older than 24 hours.Defaults to 1 hour and must be at least 10 minutes.",
-                                                                    "format": "int64",
                                                                     "type": "integer"
                                                                 },
                                                                 "path": {
@@ -2664,7 +2627,6 @@
                                         "properties": {
                                             "defaultMode": {
                                                 "description": "Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "items": {
@@ -2678,7 +2640,6 @@
                                                         },
                                                         "mode": {
                                                             "description": "Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.",
-                                                            "format": "int32",
                                                             "type": "integer"
                                                         },
                                                         "path": {
@@ -3224,7 +3185,6 @@
                                             },
                                             "failureThreshold": {
                                                 "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "httpGet": {
@@ -3282,17 +3242,14 @@
                                             },
                                             "initialDelaySeconds": {
                                                 "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "periodSeconds": {
                                                 "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "successThreshold": {
                                                 "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "tcpSocket": {
@@ -3320,7 +3277,6 @@
                                             },
                                             "timeoutSeconds": {
                                                 "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             }
                                         },
@@ -3337,7 +3293,6 @@
                                             "properties": {
                                                 "containerPort": {
                                                     "description": "Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.",
-                                                    "format": "int32",
                                                     "type": "integer"
                                                 },
                                                 "hostIP": {
@@ -3346,7 +3301,6 @@
                                                 },
                                                 "hostPort": {
                                                     "description": "Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.",
-                                                    "format": "int32",
                                                     "type": "integer"
                                                 },
                                                 "name": {
@@ -3390,7 +3344,6 @@
                                             },
                                             "failureThreshold": {
                                                 "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "httpGet": {
@@ -3448,17 +3401,14 @@
                                             },
                                             "initialDelaySeconds": {
                                                 "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "periodSeconds": {
                                                 "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "successThreshold": {
                                                 "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "tcpSocket": {
@@ -3486,7 +3436,6 @@
                                             },
                                             "timeoutSeconds": {
                                                 "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             }
                                         },
@@ -3567,7 +3516,6 @@
                                             },
                                             "runAsGroup": {
                                                 "description": "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                                "format": "int64",
                                                 "type": "integer"
                                             },
                                             "runAsNonRoot": {
@@ -3576,7 +3524,6 @@
                                             },
                                             "runAsUser": {
                                                 "description": "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                                "format": "int64",
                                                 "type": "integer"
                                             },
                                             "seLinuxOptions": {
@@ -3640,7 +3587,6 @@
                                             },
                                             "failureThreshold": {
                                                 "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "httpGet": {
@@ -3698,17 +3644,14 @@
                                             },
                                             "initialDelaySeconds": {
                                                 "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "periodSeconds": {
                                                 "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "successThreshold": {
                                                 "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
-                                                "format": "int32",
                                                 "type": "integer"
                                             },
                                             "tcpSocket": {
@@ -3736,7 +3679,6 @@
                                             },
                                             "timeoutSeconds": {
                                                 "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
-                                                "format": "int32",
                                                 "type": "integer"
                                             }
                                         },
@@ -3902,7 +3844,6 @@
                                 },
                                 "runAsGroup": {
                                     "description": "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                    "format": "int64",
                                     "type": "integer"
                                 },
                                 "runAsNonRoot": {
@@ -3911,7 +3852,6 @@
                                 },
                                 "runAsUser": {
                                     "description": "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.",
-                                    "format": "int64",
                                     "type": "integer"
                                 },
                                 "seLinuxOptions": {
@@ -4017,7 +3957,6 @@
                                     },
                                     "tolerationSeconds": {
                                         "description": "TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.",
-                                        "format": "int64",
                                         "type": "integer"
                                     },
                                     "value": {
