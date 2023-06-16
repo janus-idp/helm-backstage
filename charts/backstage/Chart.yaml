@@ -18,10 +18,10 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.x.x
+    version: "2.4.0"
   - name: backstage
     repository: https://backstage.github.io/charts
-    version: "1.x.x"
+    version: "1.1.2"
     alias: upstream
 home: https://janus-idp.io
 icon: https://avatars.githubusercontent.com/u/117844786
@@ -42,4 +42,4 @@ sources:
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 2.1.0
+version: 2.2.0
