@@ -1,6 +1,21 @@
 {
     "$id": "https://raw.githubusercontent.com/janus-idp/helm-backstage/main/charts/backstage/values.schema.json",
     "properties": {
+        "global": {
+            "properties": {
+                "clusterRouterBase": {
+                    "default": "apps.example.com",
+                    "title": "Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.",
+                    "type": "string"
+                },
+                "host": {
+                    "default": "",
+                    "title": "Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "route": {
             "additionalProperties": false,
             "properties": {

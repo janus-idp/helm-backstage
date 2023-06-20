@@ -1,3 +1,9 @@
+global:
+  # -- Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.
+  clusterRouterBase: apps.example.com
+  # -- Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`
+  host: ""
+
 # -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
 # @default -- Use Openshift compatible settings
 upstream:
@@ -17,12 +23,12 @@ upstream:
     # can't accommodate that properly.
     appConfig:
       app:
-        # Please update to match host.
-        baseUrl: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+        # Please update to match host in case you don't want to configure hostname via `global.clusterRouterBase` or `global.host`.
+        baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
       backend:
-        baseUrl: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+        baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
         cors:
-          origin: 'https://{{- print .Release.Name "-" .Release.Namespace -}}.apps.example.com'
+          origin: 'https://{{- include "janus-idp.hostname" . }}'
         database:
           connection:
             password: ${POSTGRESQL_ADMIN_PASSWORD}
@@ -62,6 +68,8 @@ upstream:
           secretKeyRef:
             key: postgres-password
             name: "{{ .Release.Name }}-postgresql"
+  ingress:
+    host: "{{ .Values.global.host }}"
 
 
 # -- OpenShift Route parameters
@@ -74,7 +82,7 @@ route:
   enabled: true
 
   # -- Set the host attribute to a custom value. If not set, OpenShift will generate it, please make sure to match your baseUrl
-  host: ""
+  host: "{{ .Values.global.host }}"
 
   # -- Path that the router watches for, to route traffic for to the service.
   path: "/"
