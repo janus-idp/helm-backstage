@@ -23,6 +23,6 @@ Please remember to:
 ## Checklist
 
 - [ ] Chart version bumped in `Chart.yaml` according to [semver](http://semver.org/).
-- [ ] Variables are documented in the `values.yaml` and added to the README.md. The [helm-docs](https://github.com/norwoodj/helm-docs) utility can be used to generate the necessary content. Use `helm-docs --dry-run` to preview the content.
-- [ ] JSON Schema generated.
+- [ ] Variables are documented in the `values.yaml` and added to the README.md. The [pre-commit](https://pre-commit.com/) utility can be used to generate the necessary content. Use `pre-commit run -a` to apply changes.
+- [ ] JSON Schema template updated and re-generated the raw schema via `pre-commit` hook.
 - [ ] List tests pass for Chart using the [Chart Testing](https://github.com/helm/chart-testing) tool and the `ct lint` command.
