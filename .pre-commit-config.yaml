@@ -3,6 +3,7 @@ repos:
     rev: v1.2.0
     hooks:
       - id: helm-docs
+        files: (README\.md(\.gotmpl)?|(Chart|requirements|values)\.ya?ml)$
         args:
           # Make the tool search for charts only under the ``charts` directory
           - --chart-search-root=charts
