@@ -108,213 +108,6 @@
             "type": "object"
         },
         "upstream": {
-            "metrics": {
-                "additionalProperties": false,
-                "description": "Allows configuring your backstage instance as a scrape target for Prometheus. Ref: https://github.com/prometheus/prometheus",
-                "properties": {
-                    "serviceMonitor": {
-                        "additionalProperties": false,
-                        "description": "A custom resource that is consumed by Prometheus Operator. Ref: https://github.com/prometheus-operator/prometheus-operator",
-                        "properties": {
-                            "annotations": {
-                                "additionalProperties": {
-                                    "type": "string"
-                                },
-                                "default": {},
-                                "title": "ServiceMonitor annotations",
-                                "type": "object"
-                            },
-                            "enabled": {
-                                "default": false,
-                                "description": "Prometheus Operator must be installed in your cluster prior to enabling.",
-                                "title": "If enabled, a ServiceMonitor resource for Prometheus Operator is created",
-                                "type": "boolean"
-                            },
-                            "interval": {
-                                "default": null,
-                                "title": "ServiceMonitor scrape interval",
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
-                            },
-                            "labels": {
-                                "additionalProperties": {
-                                    "type": "string"
-                                },
-                                "default": {},
-                                "title": "Additional ServiceMonitor labels",
-                                "type": "object"
-                            },
-                            "path": {
-                                "default": "/metrics",
-                                "description": "ote that the /metrics endpoint is NOT present in a freshly scaffolded Backstage app. To setup, follow the Prometheus metrics tutorial. https://github.com/backstage/backstage/blob/master/contrib/docs/tutorials/prometheus-metrics.md",
-                                "title": "ServiceMonitor endpoint path",
-                                "type": "string"
-                            }
-                        },
-                        "title": "ServiceMonitor configuration",
-                        "type": "object"
-                    }
-                },
-                "title": "Metrics configuration",
-                "type": "object"
-            },
-            "postgresql": {
-                "properties": {
-                    "architecture": {
-                        "description": "Allowed values: `standalone` or `replication`",
-                        "form": true,
-                        "title": "PostgreSQL architecture",
-                        "type": "string"
-                    },
-                    "auth": {
-                        "form": true,
-                        "properties": {
-                            "database": {
-                                "description": "Name of the custom database to be created during the 1st initialization of PostgreSQL",
-                                "form": true,
-                                "title": "PostgreSQL custom database",
-                                "type": "string"
-                            },
-                            "enablePostgresUser": {
-                                "description": "Assign a password to the \"postgres\" admin user. Otherwise, remote access will be blocked for this user",
-                                "form": true,
-                                "title": "Enable \"postgres\" admin user",
-                                "type": "boolean"
-                            },
-                            "password": {
-                                "description": "Defaults to a random 10-character alphanumeric string if not set",
-                                "form": true,
-                                "title": "Password for the custom user to create",
-                                "type": "string"
-                            },
-                            "postgresPassword": {
-                                "description": "Defaults to a random 10-character alphanumeric string if not set",
-                                "form": true,
-                                "title": "Password for the \"postgres\" admin user",
-                                "type": "string"
-                            },
-                            "replicationPassword": {
-                                "description": "Defaults to a random 10-character alphanumeric string if not set",
-                                "form": true,
-                                "hidden": {
-                                    "path": "architecture",
-                                    "value": "standalone"
-                                },
-                                "title": "Password for PostgreSQL replication user",
-                                "type": "string"
-                            },
-                            "replicationUsername": {
-                                "description": "Name of user used to manage replication.",
-                                "form": true,
-                                "hidden": {
-                                    "path": "architecture",
-                                    "value": "standalone"
-                                },
-                                "title": "PostgreSQL replication user",
-                                "type": "string"
-                            },
-                            "username": {
-                                "description": "Name of the custom user to be created during the 1st initialization of PostgreSQL. This user only has permissions on the PostgreSQL custom database",
-                                "form": true,
-                                "title": "PostgreSQL custom user",
-                                "type": "string"
-                            }
-                        },
-                        "title": "Authentication configuration",
-                        "type": "object"
-                    },
-                    "metrics": {
-                        "properties": {
-                            "enabled": {
-                                "form": true,
-                                "title": "Configure metrics exporter",
-                                "type": "boolean"
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "persistence": {
-                        "properties": {
-                            "size": {
-                                "form": true,
-                                "render": "slider",
-                                "sliderMax": 100,
-                                "sliderMin": 1,
-                                "sliderUnit": "Gi",
-                                "title": "Persistent Volume Size",
-                                "type": "string"
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "replication": {
-                        "form": true,
-                        "properties": {
-                            "enabled": {
-                                "form": true,
-                                "title": "Enable Replication",
-                                "type": "boolean"
-                            },
-                            "readReplicas": {
-                                "form": true,
-                                "hidden": {
-                                    "path": "architecture",
-                                    "value": "standalone"
-                                },
-                                "title": "read Replicas",
-                                "type": "integer"
-                            }
-                        },
-                        "title": "Replication Details",
-                        "type": "object"
-                    },
-                    "resources": {
-                        "description": "Configure resource requests",
-                        "form": true,
-                        "properties": {
-                            "requests": {
-                                "properties": {
-                                    "cpu": {
-                                        "form": true,
-                                        "render": "slider",
-                                        "sliderMax": 2000,
-                                        "sliderMin": 10,
-                                        "sliderUnit": "m",
-                                        "title": "CPU Request",
-                                        "type": "string"
-                                    },
-                                    "memory": {
-                                        "form": true,
-                                        "render": "slider",
-                                        "sliderMax": 2048,
-                                        "sliderMin": 10,
-                                        "sliderUnit": "Mi",
-                                        "title": "Memory Request",
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "title": "Required Resources",
-                        "type": "object"
-                    },
-                    "volumePermissions": {
-                        "properties": {
-                            "enabled": {
-                                "description": "Change the owner of the persist volume mountpoint to RunAsUser:fsGroup",
-                                "form": true,
-                                "title": "Enable Init Containers",
-                                "type": "boolean"
-                            }
-                        },
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
             "properties": {
                 "backstage": {
                     "additionalProperties": false,
@@ -337,7 +130,10 @@
                                 }
                             ],
                             "title": "Generates ConfigMap and configures it in the Backstage pods",
-                            "type": "object"
+                            "type": [
+                                "object",
+                                "string"
+                            ]
                         },
                         "args": {
                             "default": [],
@@ -3801,6 +3597,121 @@
                             "title": "Directory containing the backstage installation",
                             "type": "string"
                         },
+                        "livenessProbe": {
+                            "description": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
+                            "properties": {
+                                "exec": {
+                                    "description": "ExecAction describes a \"run in container\" action.",
+                                    "properties": {
+                                        "command": {
+                                            "description": "Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "failureThreshold": {
+                                    "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
+                                    "type": "integer"
+                                },
+                                "httpGet": {
+                                    "description": "HTTPGetAction describes an action based on HTTP Get requests.",
+                                    "properties": {
+                                        "host": {
+                                            "description": "Host name to connect to, defaults to the pod IP. You probably want to set \"Host\" in httpHeaders instead.",
+                                            "type": "string"
+                                        },
+                                        "httpHeaders": {
+                                            "description": "Custom headers to set in the request. HTTP allows repeated headers.",
+                                            "items": {
+                                                "description": "HTTPHeader describes a custom header to be used in HTTP probes",
+                                                "properties": {
+                                                    "name": {
+                                                        "description": "The header field name",
+                                                        "type": "string"
+                                                    },
+                                                    "value": {
+                                                        "description": "The header field value",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "name",
+                                                    "value"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "path": {
+                                            "description": "Path to access on the HTTP server.",
+                                            "type": "string"
+                                        },
+                                        "port": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "integer"
+                                                }
+                                            ]
+                                        },
+                                        "scheme": {
+                                            "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "port"
+                                    ],
+                                    "type": "object"
+                                },
+                                "initialDelaySeconds": {
+                                    "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+                                    "type": "integer"
+                                },
+                                "periodSeconds": {
+                                    "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
+                                    "type": "integer"
+                                },
+                                "successThreshold": {
+                                    "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
+                                    "type": "integer"
+                                },
+                                "tcpSocket": {
+                                    "description": "TCPSocketAction describes an action based on opening a socket",
+                                    "properties": {
+                                        "host": {
+                                            "description": "Optional: Host name to connect to, defaults to the pod IP.",
+                                            "type": "string"
+                                        },
+                                        "port": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "integer"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "port"
+                                    ],
+                                    "type": "object"
+                                },
+                                "timeoutSeconds": {
+                                    "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        },
                         "nodeSelector": {
                             "additionalProperties": {
                                 "type": "string"
@@ -3908,6 +3819,121 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "readinessProbe": {
+                            "description": "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
+                            "properties": {
+                                "exec": {
+                                    "description": "ExecAction describes a \"run in container\" action.",
+                                    "properties": {
+                                        "command": {
+                                            "description": "Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "failureThreshold": {
+                                    "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
+                                    "type": "integer"
+                                },
+                                "httpGet": {
+                                    "description": "HTTPGetAction describes an action based on HTTP Get requests.",
+                                    "properties": {
+                                        "host": {
+                                            "description": "Host name to connect to, defaults to the pod IP. You probably want to set \"Host\" in httpHeaders instead.",
+                                            "type": "string"
+                                        },
+                                        "httpHeaders": {
+                                            "description": "Custom headers to set in the request. HTTP allows repeated headers.",
+                                            "items": {
+                                                "description": "HTTPHeader describes a custom header to be used in HTTP probes",
+                                                "properties": {
+                                                    "name": {
+                                                        "description": "The header field name",
+                                                        "type": "string"
+                                                    },
+                                                    "value": {
+                                                        "description": "The header field value",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "name",
+                                                    "value"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "path": {
+                                            "description": "Path to access on the HTTP server.",
+                                            "type": "string"
+                                        },
+                                        "port": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "integer"
+                                                }
+                                            ]
+                                        },
+                                        "scheme": {
+                                            "description": "Scheme to use for connecting to the host. Defaults to HTTP.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "port"
+                                    ],
+                                    "type": "object"
+                                },
+                                "initialDelaySeconds": {
+                                    "description": "Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+                                    "type": "integer"
+                                },
+                                "periodSeconds": {
+                                    "description": "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.",
+                                    "type": "integer"
+                                },
+                                "successThreshold": {
+                                    "description": "Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.",
+                                    "type": "integer"
+                                },
+                                "tcpSocket": {
+                                    "description": "TCPSocketAction describes an action based on opening a socket",
+                                    "properties": {
+                                        "host": {
+                                            "description": "Optional: Host name to connect to, defaults to the pod IP.",
+                                            "type": "string"
+                                        },
+                                        "port": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "integer"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "port"
+                                    ],
+                                    "type": "object"
+                                },
+                                "timeoutSeconds": {
+                                    "description": "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+                                    "type": "integer"
                                 }
                             },
                             "type": "object"
@@ -4143,6 +4169,58 @@
                     "title": "Override Kubernetes version",
                     "type": "string"
                 },
+                "metrics": {
+                    "additionalProperties": false,
+                    "description": "Allows configuring your backstage instance as a scrape target for Prometheus. Ref: https://github.com/prometheus/prometheus",
+                    "properties": {
+                        "serviceMonitor": {
+                            "additionalProperties": false,
+                            "description": "A custom resource that is consumed by Prometheus Operator. Ref: https://github.com/prometheus-operator/prometheus-operator",
+                            "properties": {
+                                "annotations": {
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "default": {},
+                                    "title": "ServiceMonitor annotations",
+                                    "type": "object"
+                                },
+                                "enabled": {
+                                    "default": false,
+                                    "description": "Prometheus Operator must be installed in your cluster prior to enabling.",
+                                    "title": "If enabled, a ServiceMonitor resource for Prometheus Operator is created",
+                                    "type": "boolean"
+                                },
+                                "interval": {
+                                    "default": null,
+                                    "title": "ServiceMonitor scrape interval",
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "labels": {
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "default": {},
+                                    "title": "Additional ServiceMonitor labels",
+                                    "type": "object"
+                                },
+                                "path": {
+                                    "default": "/metrics",
+                                    "description": "ote that the /metrics endpoint is NOT present in a freshly scaffolded Backstage app. To setup, follow the Prometheus metrics tutorial. https://github.com/backstage/backstage/blob/master/contrib/docs/tutorials/prometheus-metrics.md",
+                                    "title": "ServiceMonitor endpoint path",
+                                    "type": "string"
+                                }
+                            },
+                            "title": "ServiceMonitor configuration",
+                            "type": "object"
+                        }
+                    },
+                    "title": "Metrics configuration",
+                    "type": "object"
+                },
                 "nameOverride": {
                     "default": "",
                     "title": "String to partially override common.names.fullname",
@@ -4316,6 +4394,161 @@
                     "title": "Network policies",
                     "type": "object"
                 },
+                "postgresql": {
+                    "properties": {
+                        "architecture": {
+                            "description": "Allowed values: `standalone` or `replication`",
+                            "form": true,
+                            "title": "PostgreSQL architecture",
+                            "type": "string"
+                        },
+                        "auth": {
+                            "form": true,
+                            "properties": {
+                                "database": {
+                                    "description": "Name of the custom database to be created during the 1st initialization of PostgreSQL",
+                                    "form": true,
+                                    "title": "PostgreSQL custom database",
+                                    "type": "string"
+                                },
+                                "enablePostgresUser": {
+                                    "description": "Assign a password to the \"postgres\" admin user. Otherwise, remote access will be blocked for this user",
+                                    "form": true,
+                                    "title": "Enable \"postgres\" admin user",
+                                    "type": "boolean"
+                                },
+                                "password": {
+                                    "description": "Defaults to a random 10-character alphanumeric string if not set",
+                                    "form": true,
+                                    "title": "Password for the custom user to create",
+                                    "type": "string"
+                                },
+                                "postgresPassword": {
+                                    "description": "Defaults to a random 10-character alphanumeric string if not set",
+                                    "form": true,
+                                    "title": "Password for the \"postgres\" admin user",
+                                    "type": "string"
+                                },
+                                "replicationPassword": {
+                                    "description": "Defaults to a random 10-character alphanumeric string if not set",
+                                    "form": true,
+                                    "hidden": {
+                                        "path": "architecture",
+                                        "value": "standalone"
+                                    },
+                                    "title": "Password for PostgreSQL replication user",
+                                    "type": "string"
+                                },
+                                "replicationUsername": {
+                                    "description": "Name of user used to manage replication.",
+                                    "form": true,
+                                    "hidden": {
+                                        "path": "architecture",
+                                        "value": "standalone"
+                                    },
+                                    "title": "PostgreSQL replication user",
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "description": "Name of the custom user to be created during the 1st initialization of PostgreSQL. This user only has permissions on the PostgreSQL custom database",
+                                    "form": true,
+                                    "title": "PostgreSQL custom user",
+                                    "type": "string"
+                                }
+                            },
+                            "title": "Authentication configuration",
+                            "type": "object"
+                        },
+                        "metrics": {
+                            "properties": {
+                                "enabled": {
+                                    "form": true,
+                                    "title": "Configure metrics exporter",
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "persistence": {
+                            "properties": {
+                                "size": {
+                                    "form": true,
+                                    "render": "slider",
+                                    "sliderMax": 100,
+                                    "sliderMin": 1,
+                                    "sliderUnit": "Gi",
+                                    "title": "Persistent Volume Size",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "replication": {
+                            "form": true,
+                            "properties": {
+                                "enabled": {
+                                    "form": true,
+                                    "title": "Enable Replication",
+                                    "type": "boolean"
+                                },
+                                "readReplicas": {
+                                    "form": true,
+                                    "hidden": {
+                                        "path": "architecture",
+                                        "value": "standalone"
+                                    },
+                                    "title": "read Replicas",
+                                    "type": "integer"
+                                }
+                            },
+                            "title": "Replication Details",
+                            "type": "object"
+                        },
+                        "resources": {
+                            "description": "Configure resource requests",
+                            "form": true,
+                            "properties": {
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "form": true,
+                                            "render": "slider",
+                                            "sliderMax": 2000,
+                                            "sliderMin": 10,
+                                            "sliderUnit": "m",
+                                            "title": "CPU Request",
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "form": true,
+                                            "render": "slider",
+                                            "sliderMax": 2048,
+                                            "sliderMin": 10,
+                                            "sliderUnit": "Mi",
+                                            "title": "Memory Request",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "title": "Required Resources",
+                            "type": "object"
+                        },
+                        "volumePermissions": {
+                            "properties": {
+                                "enabled": {
+                                    "description": "Change the owner of the persist volume mountpoint to RunAsUser:fsGroup",
+                                    "form": true,
+                                    "title": "Enable Init Containers",
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
                 "service": {
                     "additionalProperties": false,
                     "properties": {
@@ -4431,46 +4664,46 @@
                     },
                     "title": "Service parameters",
                     "type": "object"
-                }
-            },
-            "serviceAccount": {
-                "additionalProperties": false,
-                "properties": {
-                    "annotations": {
-                        "additionalProperties": {
-                            "type": "string"
-                        },
-                        "default": {},
-                        "title": "Additional custom annotations for the ServiceAccount.",
-                        "type": "object"
-                    },
-                    "automountServiceAccountToken": {
-                        "default": true,
-                        "title": "Auto-mount the service account token in the pod",
-                        "type": "boolean"
-                    },
-                    "create": {
-                        "default": false,
-                        "title": "Enable the creation of a ServiceAccount for Backstage pods",
-                        "type": "boolean"
-                    },
-                    "labels": {
-                        "additionalProperties": {
-                            "type": "string"
-                        },
-                        "default": {},
-                        "title": "Additional custom labels to the service ServiceAccount.",
-                        "type": "object"
-                    },
-                    "name": {
-                        "default": "",
-                        "description": "If not set and `serviceAccount.create` is true, a name is generated",
-                        "title": "Name of the ServiceAccount to use",
-                        "type": "string"
-                    }
                 },
-                "title": "Service Account Configuration",
-                "type": "object"
+                "serviceAccount": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "annotations": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "default": {},
+                            "title": "Additional custom annotations for the ServiceAccount.",
+                            "type": "object"
+                        },
+                        "automountServiceAccountToken": {
+                            "default": true,
+                            "title": "Auto-mount the service account token in the pod",
+                            "type": "boolean"
+                        },
+                        "create": {
+                            "default": false,
+                            "title": "Enable the creation of a ServiceAccount for Backstage pods",
+                            "type": "boolean"
+                        },
+                        "labels": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "default": {},
+                            "title": "Additional custom labels to the service ServiceAccount.",
+                            "type": "object"
+                        },
+                        "name": {
+                            "default": "",
+                            "description": "If not set and `serviceAccount.create` is true, a name is generated",
+                            "title": "Name of the ServiceAccount to use",
+                            "type": "string"
+                        }
+                    },
+                    "title": "Service Account Configuration",
+                    "type": "object"
+                }
             },
             "title": "Backstage chart schema",
             "type": "object"
