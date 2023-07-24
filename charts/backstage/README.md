@@ -2,7 +2,7 @@
 # Janus-IDP Backstage Helm Chart
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square)
+![Version: 2.2.1](https://img.shields.io/badge/Version-2.2.1-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
@@ -100,7 +100,7 @@ Chart is also available in OCI format. The list of available releases can be fou
 Install one of the available versions:
 
 ```shell
-helm upgrade -i oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>
+helm upgrade -i <release_name> oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>
 ```
 
 > **Tip**: List all releases using `helm list`
@@ -210,6 +210,7 @@ Please note that any custom modifications to how backstage is being exposed may 
 ```yaml
 # values.yaml
 upstream:
+  backstage:
     appConfig:
       app:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'

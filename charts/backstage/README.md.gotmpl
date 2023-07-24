@@ -94,7 +94,7 @@ Chart is also available in OCI format. The list of available releases can be fou
 Install one of the available versions:
 
 ```shell
-helm upgrade -i oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>
+helm upgrade -i <release_name> oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>
 ```
 
 > **Tip**: List all releases using `helm list`
@@ -177,6 +177,7 @@ Please note that any custom modifications to how backstage is being exposed may 
 ```yaml
 # values.yaml
 upstream:
+  backstage:
     appConfig:
       app:
         baseUrl: 'https://{{"{{"}}- include "janus-idp.hostname" . {{"}}"}}'
