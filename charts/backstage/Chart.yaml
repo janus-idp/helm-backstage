@@ -26,9 +26,9 @@ dependencies:
 home: https://janus-idp.io
 icon: https://avatars.githubusercontent.com/u/117844786
 keywords:
-- backstage
-- idp
-- janus-idp
+  - backstage
+  - idp
+  - janus-idp
 kubeVersion: ">= 1.19.0-0"
 maintainers:
   - name: Janus-IDP
@@ -36,10 +36,10 @@ maintainers:
 name: backstage
 type: application
 sources:
-- https://github.com/janus-idp/helm-backstage
-- https://github.com/janus-idp/backstage-showcase
+  - https://github.com/janus-idp/helm-backstage
+  - https://github.com/janus-idp/backstage-showcase
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 2.2.1
+version: 2.2.2
