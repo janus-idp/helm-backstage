@@ -38,8 +38,7 @@ type: application
 sources:
   - https://github.com/janus-idp/helm-backstage
   - https://github.com/janus-idp/backstage-showcase
-
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 2.2.2
+version: 2.3.0
