@@ -3729,6 +3729,14 @@
                             "title": "Annotations to add to the backend deployment pods",
                             "type": "object"
                         },
+                        "podLabels": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "default": {},
+                            "title": "Labels to add to the backend deployment pods",
+                            "type": "object"
+                        },
                         "podSecurityContext": {
                             "description": "SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.",
                             "properties": {
@@ -3977,6 +3985,12 @@
                                 }
                             },
                             "type": "object"
+                        },
+                        "revisionHistoryLimit": {
+                            "default": 10,
+                            "minimum": 0,
+                            "title": "The count of deployment revisions",
+                            "type": "integer"
                         },
                         "tolerations": {
                             "default": [],
