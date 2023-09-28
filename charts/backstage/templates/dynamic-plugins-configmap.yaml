@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dynamic-plugins
+data:
+  dynamic-plugins.yaml: |
+    {{- include "common.tplvalues.render" ( dict "value"
+    .Values.global.dynamic "context" $) | nindent 4 }}
