@@ -34,11 +34,11 @@ upstream:
             password: ${POSTGRESQL_ADMIN_PASSWORD}
             user: postgres
     extraEnvVars:
-    - name: POSTGRESQL_ADMIN_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: postgres-password
-          name: "{{ .Release.Name }}-postgresql"
+      - name: POSTGRESQL_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: "{{ .Release.Name }}-postgresql"
 
   postgresql:
     enabled: true
@@ -63,18 +63,16 @@ upstream:
         size: 1Gi
         mountPath: /var/lib/pgsql/data
       extraEnvVars:
-      - name: POSTGRESQL_ADMIN_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            key: postgres-password
-            name: "{{ .Release.Name }}-postgresql"
+        - name: POSTGRESQL_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: "{{ .Release.Name }}-postgresql"
   ingress:
     host: "{{ .Values.global.host }}"
 
-
 # -- OpenShift Route parameters
 route:
-
   # -- Route specific annotations
   annotations: {}
 
@@ -93,7 +91,6 @@ route:
   # -- Route TLS parameters
   # <br /> Ref: https://docs.openshift.com/container-platform/4.9/networking/routes/secured-routes.html
   tls:
-
     # -- Enable TLS configuration for the host defined at `route.host` parameter
     enabled: true
 
