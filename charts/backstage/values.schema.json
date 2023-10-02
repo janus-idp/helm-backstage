@@ -8,6 +8,46 @@
                     "title": "Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.",
                     "type": "string"
                 },
+                "dynamic": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "includes": {
+                            "default": [],
+                            "items": {
+                                "type": "string"
+                            },
+                            "title": "List of YAML files to include, each of which should contain a `plugins` array.",
+                            "type": "array"
+                        },
+                        "plugins": {
+                            "items": {
+                                "properties": {
+                                    "disabled": {
+                                        "default": false,
+                                        "title": "Disable the plugin.",
+                                        "type": "boolean"
+                                    },
+                                    "package": {
+                                        "title": "Package specification of the dynamic plugin to install. It should be usable by the `npm pack` command.",
+                                        "type": "string"
+                                    },
+                                    "pluginConfig": {
+                                        "title": "Optional plugin-specific app-config YAML fragment.",
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "package"
+                                ],
+                                "type": "object"
+                            },
+                            "title": "List of dynamic plugins that should be installed in the backstage application.",
+                            "type": "array"
+                        }
+                    },
+                    "title": "Dynamic plugins configuration.",
+                    "type": "object"
+                },
                 "host": {
                     "default": "",
                     "title": "Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`",

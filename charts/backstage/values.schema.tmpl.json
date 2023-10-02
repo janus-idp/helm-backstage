@@ -29,6 +29,44 @@
                     "title": "Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`",
                     "type": "string",
                     "default": ""
+                },
+                "dynamic": {
+                    "title": "Dynamic plugins configuration.",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "plugins": {
+                            "title": "List of dynamic plugins that should be installed in the backstage application.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "package": {
+                                        "title": "Package specification of the dynamic plugin to install. It should be usable by the `npm pack` command.",
+                                        "type": "string"
+                                    },
+                                    "pluginConfig": {
+                                        "title": "Optional plugin-specific app-config YAML fragment.",
+                                        "type": "object"
+                                    },
+                                    "disabled": {
+                                        "title": "Disable the plugin.",
+                                        "type": "boolean",
+                                        "default": false
+                                    }
+                                },
+                                "required": ["package"]
+                            }
+                        },
+                        "includes": {
+                            "title": "List of YAML files to include, each of which should contain a `plugins` array.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        }
+                    }
                 }
             }
         },
