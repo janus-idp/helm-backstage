@@ -116,6 +116,10 @@ upstream:
             subPath: dynamic-plugins.yaml
         workingDir: /opt/app-root/src
     installDir: /opt/app-root/src
+    podAnnotations:
+      checksum/dynamic-plugins: >-
+        {{- include "common.tplvalues.render" ( dict "value"
+        .Values.global.dynamic "context" $) | sha256sum }}
   postgresql:
     enabled: true
     postgresqlDataDir: /var/lib/pgsql/data/userdata
