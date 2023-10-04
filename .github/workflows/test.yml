@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "charts/**"
+      - ".github/**"
 
 jobs:
   check-metadata:
@@ -66,4 +67,5 @@ jobs:
         run: "helm install ingress-nginx/ingress-nginx --generate-name --set controller.service.type='NodePort' --set controller.admissionWebhooks.enabled=false"
 
       - name: Run chart-testing (install)
-        run: ct install --config ct-install.yaml
+        # using nightly-20231004 tag as a temporary workaround until latest tag is fixed (https://github.com/janus-idp/backstage-showcase/issues/545)
+        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=nightly-20231004"

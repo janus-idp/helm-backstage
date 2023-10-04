@@ -2,7 +2,7 @@
 # Janus-IDP Backstage Helm Chart
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 2.4.1](https://img.shields.io/badge/Version-2.4.1-informational?style=flat-square)
+![Version: 2.6.1](https://img.shields.io/badge/Version-2.6.1-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
@@ -121,8 +121,8 @@ Kubernetes: `>= 1.19.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://backstage.github.io/charts | upstream(backstage) | 1.2.0 |
-| https://charts.bitnami.com/bitnami | common | 2.9.1 |
+| https://backstage.github.io/charts | upstream(backstage) | 1.3.0 |
+| https://charts.bitnami.com/bitnami | common | 2.13.1 |
 
 ## Values
 
