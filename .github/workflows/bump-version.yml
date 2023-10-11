@@ -54,7 +54,7 @@ jobs:
 
       - name: Checkout Pull Request
         if: steps.command.outputs.command-name
-        run: hub pr checkout ${{ github.event.issue.number }}
+        run: gh pr checkout ${{ github.event.issue.number }}
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
 
