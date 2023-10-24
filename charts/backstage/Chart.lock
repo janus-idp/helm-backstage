@@ -4,6 +4,6 @@ dependencies:
   version: 2.13.3
 - name: backstage
   repository: https://backstage.github.io/charts
-  version: 1.3.0
-digest: sha256:5313fd2b57ff358271413040450040556c448a19e869d259e3f1e75152432124
-generated: "2023-10-24T11:31:31.545635545Z"
+  version: 1.4.0
+digest: sha256:8bfa57e3af51e465cae1bc74eac45c1fafa5b3e52cf061cbdf4072fce3197387
+generated: "2023-10-24T11:42:57.043238218Z"
