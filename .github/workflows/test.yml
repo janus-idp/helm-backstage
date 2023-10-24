@@ -66,6 +66,10 @@ jobs:
       - name: Install Ingress Controller
         run: "helm install ingress-nginx/ingress-nginx --generate-name --set controller.service.type='NodePort' --set controller.admissionWebhooks.enabled=false"
 
-      - name: Run chart-testing (install)
-        # using nightly-20231004 tag as a temporary workaround until latest tag is fixed (https://github.com/janus-idp/backstage-showcase/issues/545)
-        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=nightly-20231004"
+      - name: Run chart-testing (latest)
+        # test with latest stable backstage-showcase release
+        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=latest"
+
+      - name: Run chart-testing (next)
+        # test with the next backstage-showcase version (main branch)
+        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=next"
