@@ -27,6 +27,10 @@
                                         "title": "Disable the plugin.",
                                         "type": "boolean"
                                     },
+                                    "integrity": {
+                                        "title": "Integrity checksum of the package. Optional for local packages. Supported algorithms include: `sha512`, `sha384` and `sha256`. Refer to https://w3c.github.io/webappsec-subresource-integrity/#integrity-metadata-description for more information",
+                                        "type": "string"
+                                    },
                                     "package": {
                                         "title": "Package specification of the dynamic plugin to install. It should be usable by the `npm pack` command.",
                                         "type": "string"
