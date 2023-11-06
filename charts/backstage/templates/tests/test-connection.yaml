@@ -16,5 +16,5 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - |
-          curl --connect-timeout 5 --max-time 10 --retry 10 --retry-delay 10 --retry-max-time 30 --retry-all-errors {{ include "common.names.fullname" . }}:{{ .Values.upstream.service.ports.backend }}
+          curl --connect-timeout 5 --max-time 20 --retry 20 --retry-delay 10 --retry-max-time 60 --retry-all-errors {{ include "common.names.fullname" . }}:{{ .Values.upstream.service.ports.backend }}
   restartPolicy: Never

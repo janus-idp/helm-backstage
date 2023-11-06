@@ -6,3 +6,9 @@ upstream:
     primary:
       persistence:
         enabled: false
+  backstage:
+    appConfig:
+      backend:
+        auth:
+          keys:
+            - secret: sEKIT4CwJ4MwVLzen5SFL6fJmwOPB2sl
