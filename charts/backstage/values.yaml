@@ -17,6 +17,17 @@ global:
   clusterRouterBase: apps.example.com
   # -- Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`
   host: ""
+  # -- Enable service authentication within Backstage instance
+  auth:
+    # -- Backend service to service authentication
+    # <br /> Ref: https://backstage.io/docs/auth/service-to-service-auth/
+    backend:
+      # -- Enable backend service to service authentication, unless configured otherwise it generates a secret value
+      enabled: true
+      # -- Instead of generating a secret value, refer to existing secret
+      existingSecret: ""
+      # -- Instead of generating a secret value, use fo;lowing value
+      value: ""
 
 # -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
 # @default -- Use Openshift compatible settings
@@ -47,6 +58,9 @@ upstream:
           connection:
             password: ${POSTGRESQL_ADMIN_PASSWORD}
             user: postgres
+        auth:
+          keys:
+            - secret: ${BACKEND_SECRET}
     readinessProbe:
       failureThreshold: 3
       httpGet:
@@ -68,6 +82,11 @@ upstream:
       successThreshold: 1
       timeoutSeconds: 2
     extraEnvVars:
+      - name: BACKEND_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: backend-secret
+            name: '{{ include "janus-idp.backend-secret-name" $ }}'
       - name: POSTGRESQL_ADMIN_PASSWORD
         valueFrom:
           secretKeyRef:

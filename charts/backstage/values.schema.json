@@ -3,6 +3,35 @@
     "properties": {
         "global": {
             "properties": {
+                "auth": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "backend": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "default": true,
+                                    "title": "Enable backend service to service authentication, unless configured otherwise it generates a secret value",
+                                    "type": "boolean"
+                                },
+                                "existingSecret": {
+                                    "default": "",
+                                    "title": "Instead of generating a secret value, refer to existing secret",
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "default": "",
+                                    "title": "Instead of generating a secret value, use fo;lowing value",
+                                    "type": "string"
+                                }
+                            },
+                            "title": "Backend service to service authentication",
+                            "type": "object"
+                        }
+                    },
+                    "title": "Enable service authentication within Backstage instance",
+                    "type": "object"
+                },
                 "clusterRouterBase": {
                     "default": "apps.example.com",
                     "title": "Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.",
