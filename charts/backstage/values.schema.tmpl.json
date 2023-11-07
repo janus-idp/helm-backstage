@@ -71,6 +71,35 @@
                             "default": []
                         }
                     }
+                },
+                "auth": {
+                    "title": "Enable service authentication within Backstage instance",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "backend": {
+                            "title": "Backend service to service authentication",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "title": "Enable backend service to service authentication, unless configured otherwise it generates a secret value",
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "existingSecret": {
+                                    "title": "Instead of generating a secret value, refer to existing secret",
+                                    "type": "string",
+                                    "default": ""
+                                },
+                                "value": {
+                                    "title": "Instead of generating a secret value, use fo;lowing value",
+                                    "type": "string",
+                                    "default": ""
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

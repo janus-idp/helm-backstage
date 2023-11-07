@@ -1,4 +1,4 @@
-name: Lint Charts
+name: Test Charts
 
 on:
   pull_request:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   check-metadata:
+    name: Lint Metadata
     runs-on: ubuntu-latest
     env:
       GO111MODULE: on
@@ -30,7 +31,8 @@ jobs:
         uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # renovate: tag=v3.0.0
         with:
           extra_args: --show-diff-on-failure
-  test:
+  test-latest:
+    name: Test Latest Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -69,6 +71,42 @@ jobs:
       - name: Run chart-testing (latest)
         # test with latest stable backstage-showcase release
         run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=latest"
+  test-next:
+    name: Test Next Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # renovate: tag=v3.5
+        with:
+          version: v3.10.0
+
+      - uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@b43128a8b25298e1e7b043b78ea6613844e079b1 # v2.6.0
+
+      - name: "Add NGINX Ingress and Bitnami Repository"
+        run: |
+          helm repo add ingress-nginx "https://kubernetes.github.io/ingress-nginx"
+          helm repo add bitnami "https://charts.bitnami.com/bitnami"
+          helm repo add backstage https://backstage.github.io/charts
+          helm repo update
+
+      - name: Run chart-testing (lint)
+        run: ct lint --config ct.yaml
+
+      - name: Create KIND Cluster
+        uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140 # v1.8.0
+
+      - name: Install Ingress Controller
+        run: "helm install ingress-nginx/ingress-nginx --generate-name --set controller.service.type='NodePort' --set controller.admissionWebhooks.enabled=false"
 
       - name: Run chart-testing (next)
         # test with the next backstage-showcase version (main branch)

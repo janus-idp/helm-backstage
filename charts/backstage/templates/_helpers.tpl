@@ -10,3 +10,14 @@ Returns custom hostname
         {{ fail "Unable to generate hostname" }}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Returns a secret name for service to service auth
+*/}}
+{{- define "janus-idp.backend-secret-name" -}}
+    {{- if .Values.global.auth.backend.existingSecret -}}
+        {{- .Values.global.auth.backend.existingSecret -}}
+    {{- else -}}
+        {{- include "common.names.fullname" . -}}-auth
+    {{- end -}}
+{{- end -}}
