@@ -135,8 +135,7 @@ upstream:
         # @default -- `quay.io/janus-idp/backstage-showcase:latest`
         image: '{{ include "backstage.image" . }}'
         command:
-          - python
-          - install-dynamic-plugins.py
+          - ./install-dynamic-plugins.sh
           - /dynamic-plugins-root
         env:
           - name: NPM_CONFIG_USERCONFIG
