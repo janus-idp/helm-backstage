@@ -12,11 +12,12 @@ from jinja2 import Template
 
 JSONSCHEMA_TEMPLATE_NAME = "values.schema.tmpl.json"
 JSONSCHEMA_NAME = "values.schema.json"
+VALUES_FILE = "values.yaml"
 CHART_LOCK = "Chart.lock"
 
-def parse_chart_lock(chart_dir: Path):
+def read_yaml(file_path: Path):
     """Open and load Chart.yaml file."""
-    with open(chart_dir / CHART_LOCK, "r") as f:
+    with open(file_path, "r") as f:
         return yaml.load(f, Loader=Loader)
 
 def template_schema(chart_dir: Path, lock: Dict[str, Any]):
@@ -26,7 +27,7 @@ def template_schema(chart_dir: Path, lock: Dict[str, Any]):
 
     return json.loads(schema_template.render(lock))
 
-def tidy_schema(schema: Any):
+def tidy_schema(schema: Any, values: Any):
     """Hack to support OCP Form view.
 
     https://issues.redhat.com/browse/OCPBUGS-14874
@@ -41,8 +42,25 @@ def tidy_schema(schema: Any):
             del schema["format"]
         except:
             pass
-        for v in schema.values():
-            tidy_schema(v)
+
+        # Override existing defaults so OCP form view
+        # doesn't try to override our defaults
+        if schema.get("default") is not None and values is not None:
+            schema["default"] = values
+
+        # Tidy up properties for type: object
+        properties: Dict[str, Any] = schema.get("properties", {})
+        for k, v in properties.items():
+            if isinstance(values, dict):
+                new_values = values.get(k, None)
+            else:
+                new_values = None
+            tidy_schema(v, new_values)
+
+        # Tidy up properties for type: array
+        items: Dict[str, Any] = schema.get("items", {})
+        if items:
+            tidy_schema(items, values)
     return schema
 
 def save(chart_dir: Path, schema: Any):
@@ -56,10 +74,11 @@ if __name__ == '__main__':
     errors: List[BaseException] = []
     for chart in charts:
         try:
-            lock = parse_chart_lock(chart)
+            lock = read_yaml(chart / CHART_LOCK)
+            values = read_yaml(chart / VALUES_FILE)
             schema_template = template_schema(chart, lock)
             schema = jsonref.replace_refs(schema_template)
-            schema = tidy_schema(schema)
+            schema = tidy_schema(schema, values)
 
             save(chart, schema)
         except BaseException as e:

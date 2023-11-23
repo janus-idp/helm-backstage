@@ -41,7 +41,9 @@
                     "additionalProperties": false,
                     "properties": {
                         "includes": {
-                            "default": [],
+                            "default": [
+                                "dynamic-plugins.default.yaml"
+                            ],
                             "items": {
                                 "type": "string"
                             },
@@ -98,12 +100,12 @@
                     "type": "object"
                 },
                 "enabled": {
-                    "default": false,
+                    "default": true,
                     "title": "Enable the creation of the route resource.",
                     "type": "boolean"
                 },
                 "host": {
-                    "default": "",
+                    "default": "{{ .Values.global.host }}",
                     "examples": [
                         "https://bakstage.example.com"
                     ],
@@ -134,7 +136,7 @@
                             "type": "string"
                         },
                         "enabled": {
-                            "default": false,
+                            "default": true,
                             "title": "Enable TLS configuration for the host defined at `route.host` parameter.",
                             "type": "boolean"
                         },
@@ -194,7 +196,30 @@
                             "type": "object"
                         },
                         "appConfig": {
-                            "default": {},
+                            "default": {
+                                "app": {
+                                    "baseUrl": "https://{{- include \"janus-idp.hostname\" . }}"
+                                },
+                                "backend": {
+                                    "auth": {
+                                        "keys": [
+                                            {
+                                                "secret": "${BACKEND_SECRET}"
+                                            }
+                                        ]
+                                    },
+                                    "baseUrl": "https://{{- include \"janus-idp.hostname\" . }}",
+                                    "cors": {
+                                        "origin": "https://{{- include \"janus-idp.hostname\" . }}"
+                                    },
+                                    "database": {
+                                        "connection": {
+                                            "password": "${POSTGRESQL_ADMIN_PASSWORD}",
+                                            "user": "postgres"
+                                        }
+                                    }
+                                }
+                            },
                             "examples": [
                                 {
                                     "app": {
@@ -209,7 +234,10 @@
                             ]
                         },
                         "args": {
-                            "default": [],
+                            "default": [
+                                "--config",
+                                "dynamic-plugins-root/app-config.dynamic-plugins.yaml"
+                            ],
                             "items": {
                                 "type": "string"
                             },
@@ -217,10 +245,7 @@
                             "type": "array"
                         },
                         "command": {
-                            "default": [
-                                "node",
-                                "packages/backend"
-                            ],
+                            "default": [],
                             "items": {
                                 "type": "string"
                             },
@@ -1541,7 +1566,26 @@
                             "type": "array"
                         },
                         "extraEnvVars": {
-                            "default": [],
+                            "default": [
+                                {
+                                    "name": "BACKEND_SECRET",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "backend-secret",
+                                            "name": "{{ include \"janus-idp.backend-secret-name\" $ }}"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "POSTGRESQL_ADMIN_PASSWORD",
+                                    "valueFrom": {
+                                        "secretKeyRef": {
+                                            "key": "postgres-password",
+                                            "name": "{{ .Release.Name }}-postgresql"
+                                        }
+                                    }
+                                }
+                            ],
                             "examples": [
                                 [
                                     {
@@ -1681,7 +1725,12 @@
                             "type": "array"
                         },
                         "extraVolumeMounts": {
-                            "default": [],
+                            "default": [
+                                {
+                                    "mountPath": "/opt/app-root/src/dynamic-plugins-root",
+                                    "name": "dynamic-plugins-root"
+                                }
+                            ],
                             "items": {
                                 "description": "VolumeMount describes a mounting of a Volume within a container.",
                                 "properties": {
@@ -1720,7 +1769,41 @@
                             "type": "array"
                         },
                         "extraVolumes": {
-                            "default": [],
+                            "default": [
+                                {
+                                    "ephemeral": {
+                                        "volumeClaimTemplate": {
+                                            "spec": {
+                                                "accessModes": [
+                                                    "ReadWriteOnce"
+                                                ],
+                                                "resources": {
+                                                    "requests": {
+                                                        "storage": "1Gi"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "dynamic-plugins-root"
+                                },
+                                {
+                                    "configMap": {
+                                        "defaultMode": 420,
+                                        "name": "dynamic-plugins",
+                                        "optional": true
+                                    },
+                                    "name": "dynamic-plugins"
+                                },
+                                {
+                                    "name": "dynamic-plugins-npmrc",
+                                    "secret": {
+                                        "defaultMode": 420,
+                                        "optional": true,
+                                        "secretName": "dynamic-plugins-npmrc"
+                                    }
+                                }
+                            ],
                             "items": {
                                 "description": "Volume represents a named volume in a pod that may be accessed by any container in the pod.",
                                 "properties": {
@@ -3242,7 +3325,7 @@
                                     "type": "array"
                                 },
                                 "registry": {
-                                    "default": "ghcr.io",
+                                    "default": "quay.io",
                                     "examples": [
                                         "ghcr.io",
                                         "quay.io",
@@ -3252,7 +3335,7 @@
                                     "type": "string"
                                 },
                                 "repository": {
-                                    "default": "backstage/backstage",
+                                    "default": "janus-idp/backstage-showcase",
                                     "title": "Backstage image repository",
                                     "type": "string"
                                 },
@@ -3267,7 +3350,42 @@
                             "type": "object"
                         },
                         "initContainers": {
-                            "default": [],
+                            "default": [
+                                {
+                                    "command": [
+                                        "./install-dynamic-plugins.sh",
+                                        "/dynamic-plugins-root"
+                                    ],
+                                    "env": [
+                                        {
+                                            "name": "NPM_CONFIG_USERCONFIG",
+                                            "value": "/opt/app-root/src/.npmrc.dynamic-plugins"
+                                        }
+                                    ],
+                                    "image": "{{ include \"backstage.image\" . }}",
+                                    "imagePullPolicy": "Always",
+                                    "name": "install-dynamic-plugins",
+                                    "volumeMounts": [
+                                        {
+                                            "mountPath": "/dynamic-plugins-root",
+                                            "name": "dynamic-plugins-root"
+                                        },
+                                        {
+                                            "mountPath": "/opt/app-root/src/dynamic-plugins.yaml",
+                                            "name": "dynamic-plugins",
+                                            "readOnly": true,
+                                            "subPath": "dynamic-plugins.yaml"
+                                        },
+                                        {
+                                            "mountPath": "/opt/app-root/src/.npmrc.dynamic-plugins",
+                                            "name": "dynamic-plugins-npmrc",
+                                            "readOnly": true,
+                                            "subPath": ".npmrc"
+                                        }
+                                    ],
+                                    "workingDir": "/opt/app-root/src"
+                                }
+                            ],
                             "items": {
                                 "description": "A single application container that you want to run within a pod.",
                                 "properties": {
@@ -4428,7 +4546,7 @@
                             "type": "array"
                         },
                         "installDir": {
-                            "default": "/app",
+                            "default": "/opt/app-root/src",
                             "title": "Directory containing the backstage installation",
                             "type": "string"
                         },
@@ -4580,7 +4698,9 @@
                             "additionalProperties": {
                                 "type": "string"
                             },
-                            "default": {},
+                            "default": {
+                                "checksum/dynamic-plugins": "{{- include \"common.tplvalues.render\" ( dict \"value\" .Values.global.dynamic \"context\" $) | sha256sum }}"
+                            },
                             "title": "Annotations to add to the backend deployment pods",
                             "type": "object"
                         },
@@ -5209,7 +5329,7 @@
                             "type": "boolean"
                         },
                         "host": {
-                            "default": "",
+                            "default": "{{ .Values.global.host }}",
                             "examples": [
                                 "backstage.10.0.0.1.nip.io"
                             ],
@@ -5296,7 +5416,7 @@
                     "type": "object"
                 },
                 "nameOverride": {
-                    "default": "",
+                    "default": "backstage",
                     "title": "String to partially override common.names.fullname",
                     "type": "string"
                 },
