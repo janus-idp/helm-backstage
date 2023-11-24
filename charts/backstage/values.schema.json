@@ -1710,6 +1710,20 @@
                             "title": "Backstage container environment variables",
                             "type": "array"
                         },
+                        "extraEnvVarsCM": {
+                            "default": [],
+                            "description": "Translates into array of `envFrom.[].configMapRef.name`",
+                            "examples": [
+                                [
+                                    "my-backstage-configmap"
+                                ]
+                            ],
+                            "items": {
+                                "type": "string"
+                            },
+                            "title": "Backstage container environment variables from existing ConfigMaps",
+                            "type": "array"
+                        },
                         "extraEnvVarsSecrets": {
                             "default": [],
                             "description": "Translates into array of `envFrom.[].secretRef.name`",
@@ -1721,7 +1735,7 @@
                             "items": {
                                 "type": "string"
                             },
-                            "title": "Backstage container environment variables from Secrets",
+                            "title": "Backstage container environment variables from existing Secrets",
                             "type": "array"
                         },
                         "extraVolumeMounts": {
