@@ -21,7 +21,7 @@ dependencies:
     version: "2.13.3"
   - name: backstage
     repository: https://backstage.github.io/charts
-    version: "1.7.0"
+    version: "1.8.0"
     alias: upstream
 home: https://janus-idp.io
 icon: https://avatars.githubusercontent.com/u/117844786
