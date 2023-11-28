@@ -186,3 +186,32 @@ upstream:
         cors:
           origin: 'https://{{"{{"}}- include "janus-idp.hostname" . {{"}}"}}'
 ```
+
+
+### Vanilla Kubernetes compatibility mode
+
+In order to deploy this chart on vanilla Kubernetes or any other non-OCP platform, please make sure to apply following changes. Further customization may be required, depending on your exact Kubernetes setup:
+
+```yaml
+# values.yaml
+global:
+  host: # Specify your own Ingress host
+route:
+  enabled: false  # OpenShift Routes do not exist on vanilla Kubernetes
+upstream:
+  ingress:
+    enabled: true  # Use Kubernetes Ingress instead of OpenShift Route
+  backstage:
+    podSecurityContext:  # Vanilla Kubernetes doesn't feature OpenShift default SCCs with dynamic UIDs, adjust accordingly to the deployed image
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
+  postgresql:
+    primary:
+      podSecurityContext:
+        enabled: true
+        fsGroup: 26
+        runAsUser: 26
+    volumePermissions:
+      enabled: true
+```
