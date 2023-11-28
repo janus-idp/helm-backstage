@@ -1581,7 +1581,7 @@
                                     "valueFrom": {
                                         "secretKeyRef": {
                                             "key": "postgres-password",
-                                            "name": "{{ .Release.Name }}-postgresql"
+                                            "name": "{{- include \"janus-idp.postgresql.secretName\" . }}"
                                         }
                                     }
                                 }
