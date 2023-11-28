@@ -170,8 +170,6 @@ upstream:
         adminPasswordKey: postgres-password
         userPasswordKey: password
     primary:
-      securityContext:
-        enabled: false
       podSecurityContext:
         enabled: false
       containerSecurityContext:
