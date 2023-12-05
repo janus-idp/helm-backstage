@@ -2,7 +2,7 @@
 # Janus-IDP Backstage Helm Chart
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 2.11.3](https://img.shields.io/badge/Version-2.11.3-informational?style=flat-square)
+![Version: 2.11.4](https://img.shields.io/badge/Version-2.11.4-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
@@ -229,4 +229,32 @@ upstream:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
         cors:
           origin: 'https://{{- include "janus-idp.hostname" . }}'
+```
+
+### Vanilla Kubernetes compatibility mode
+
+In order to deploy this chart on vanilla Kubernetes or any other non-OCP platform, please make sure to apply following changes. Further customization may be required, depending on your exact Kubernetes setup:
+
+```yaml
+# values.yaml
+global:
+  host: # Specify your own Ingress host
+route:
+  enabled: false  # OpenShift Routes do not exist on vanilla Kubernetes
+upstream:
+  ingress:
+    enabled: true  # Use Kubernetes Ingress instead of OpenShift Route
+  backstage:
+    podSecurityContext:  # Vanilla Kubernetes doesn't feature OpenShift default SCCs with dynamic UIDs, adjust accordingly to the deployed image
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
+  postgresql:
+    primary:
+      podSecurityContext:
+        enabled: true
+        fsGroup: 26
+        runAsUser: 26
+    volumePermissions:
+      enabled: true
 ```
