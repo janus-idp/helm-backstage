@@ -61,7 +61,7 @@ jobs:
       - name: Get version
         if: steps.command.outputs.command-name
         id: get_version
-        uses: mikefarah/yq@c11a53322bce866fbfa3032e326f58c89e8c0759 # v4.40.3
+        uses: mikefarah/yq@dd648994340a5d03225d97abf19c9bf1086c3f07 # v4.40.5
         with:
           cmd: yq ".version" charts/backstage/Chart.yaml
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Bump the version
         if: steps.command.outputs.command-name
-        uses: mikefarah/yq@c11a53322bce866fbfa3032e326f58c89e8c0759 # v4.40.3
+        uses: mikefarah/yq@dd648994340a5d03225d97abf19c9bf1086c3f07 # v4.40.5
         with:
           cmd: yq -i '.version = "${{ steps.semver.outputs.new_version }}"' charts/backstage/Chart.yaml
 
