@@ -19,8 +19,11 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-{{- if .Values.route.host }}
-  host: {{ tpl .Values.route.host . }}
+{{- $host := tpl .Values.route.host . -}}
+{{- if $host }}
+  host: {{ $host }}
+{{- else if .Values.global.clusterRouterBase }}
+  host: {{ include "janus-idp.hostname" . }}
 {{- end }}
 {{- if .Values.route.path }}
   path: {{ .Values.route.path }}
