@@ -6,16 +6,18 @@ Returns custom hostname
         {{- .Values.global.host -}}
     {{- else if .Values.global.clusterRouterBase -}}
         {{- printf "%s-%s.%s" (include "common.names.fullname" .) .Release.Namespace .Values.global.clusterRouterBase -}}
-    {{- else -}}
-        {{/*
-        Attempt to obtain a fallback value for the hostname from the openshift cluster if both global.host and global.clusterRouterBase are ""
-        */}}
+    {{/*
+    Attempt to obtain a fallback value for the hostname from the openshift cluster if both global.host and global.clusterRouterBase are "" and if deployed on Openshift
+    */}}
+    {{- else if .Capabilities.APIVersions.Has "config.openshift.io/v1/Ingress" }}  
         {{- $cluster := (lookup "config.openshift.io/v1" "Ingress" "" "cluster") -}}
         {{- if and (hasKey $cluster "spec") (hasKey $cluster.spec "domain") }}
             {{- printf "%s-%s.%s" (include "common.names.fullname" .) .Release.Namespace $cluster.spec.domain -}}
         {{- else -}}
-            {{ fail "Unable to generate hostname" }}
+            {{ fail "Unable to generate hostname, OCP Ingress Resource is missing `spec.domain` field" }}
         {{- end }}
+    {{- else -}}
+        {{ fail "Unable to generate hostname, please provide a valid hostname in `global.host` or `global.clusterRouterBase`" }}
     {{- end -}}
 {{- end -}}
 
