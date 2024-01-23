@@ -14,7 +14,7 @@ Returns custom hostname
         {{- if and (hasKey $cluster "spec") (hasKey $cluster.spec "domain") }}
             {{- printf "%s-%s.%s" (include "common.names.fullname" .) .Release.Namespace $cluster.spec.domain -}}
         {{- else -}}
-            {{ fail "Unable to generate hostname, OCP Ingress Resource is missing `spec.domain` field" }}
+            {{ fail "Unable to generate hostname, OCP Ingress Resource is missing `spec.domain` field. Please provide a valid hostname in `global.host` or `global.clusterRouterBase` instead" }}
         {{- end }}
     {{- else -}}
         {{ fail "Unable to generate hostname, please provide a valid hostname in `global.host` or `global.clusterRouterBase`" }}

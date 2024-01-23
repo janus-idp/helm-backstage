@@ -175,7 +175,7 @@ upstream:
 
 This charts defaults to using the [latest Janus-IDP Backstage Showcase image](https://quay.io/janus-idp/backstage-showcase:latest) that is OpenShift compatible:
 
-```
+```console
 quay.io/janus-idp/backstage-showcase:latest
 ```
 
@@ -198,6 +198,7 @@ To manually provide the Backstage pod with the right context, please add the fol
 global:
   clusterRouterBase: apps.example.com
 ```
+
 > Tip: you can use `helm upgrade -i --set global.clusterRouterBase=apps.example.com ...` instead of a value file
 
 Custom hosts are also supported via the following shorthand:
@@ -213,6 +214,7 @@ global:
         These are just templating shorthands. For full manual configuration please pay attention to values under the `route` key.
 
 Any custom modifications to how backstage is being exposed may require additional changes to the `values.yaml`:
+
 ```yaml
 # values.yaml
 upstream:
@@ -228,7 +230,7 @@ upstream:
 
 ### Vanilla Kubernetes compatibility mode
 
-In order to deploy this chart on vanilla Kubernetes or any other non-OCP platform, please make sure to apply the following changes. Note that fieldsurther customization may be required, depending on your exact Kubernetes setup:
+In order to deploy this chart on vanilla Kubernetes or any other non-OCP platform, please make sure to apply the following changes. Note that further customizations may be required, depending on your exact Kubernetes setup:
 
 ```yaml
 # values.yaml
