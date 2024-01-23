@@ -21,7 +21,7 @@
                                 },
                                 "value": {
                                     "default": "",
-                                    "title": "Instead of generating a secret value, use fo;lowing value",
+                                    "title": "Instead of generating a secret value, use the following value",
                                     "type": "string"
                                 }
                             },
@@ -33,7 +33,7 @@
                     "type": "object"
                 },
                 "clusterRouterBase": {
-                    "default": "apps.example.com",
+                    "default": "",
                     "title": "Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.",
                     "type": "string"
                 },

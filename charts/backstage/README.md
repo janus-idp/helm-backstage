@@ -2,7 +2,7 @@
 # Janus-IDP Backstage Helm Chart
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 2.11.4](https://img.shields.io/badge/Version-2.11.4-informational?style=flat-square)
+![Version: 2.12.0](https://img.shields.io/badge/Version-2.12.0-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a Backstage application
@@ -70,15 +70,6 @@ helm repo add janus-idp https://janus-idp.github.io/helm-backstage
 
 Once the chart has been added, install this chart. However before doing so, please review the default `values.yaml` and adjust as needed.
 
-- To get proper connection between frontend and backend of Backstage please update the `apps.example.com` to match your cluster host:
-
-   ```yaml
-   global:
-     clusterRouterBase: apps.example.com
-   ```
-
-   > Tip: you can use `helm upgrade -i --set global.clusterRouterBase=apps.example.com ...` instead of a value file
-
 - If your cluster doesn't provide PVCs, you should disable PostgreSQL persistence via:
 
    ```yaml
@@ -132,12 +123,12 @@ Kubernetes: `>= 1.19.0-0`
 | global.auth.backend | Backend service to service authentication <br /> Ref: https://backstage.io/docs/auth/service-to-service-auth/ | object | `{"enabled":true,"existingSecret":"","value":""}` |
 | global.auth.backend.enabled | Enable backend service to service authentication, unless configured otherwise it generates a secret value | bool | `true` |
 | global.auth.backend.existingSecret | Instead of generating a secret value, refer to existing secret | string | `""` |
-| global.auth.backend.value | Instead of generating a secret value, use fo;lowing value | string | `""` |
-| global.clusterRouterBase | Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled. | string | `"apps.example.com"` |
+| global.auth.backend.value | Instead of generating a secret value, use the following value | string | `""` |
+| global.clusterRouterBase | Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled. | string | `""` |
 | global.dynamic.includes | Array of YAML files listing dynamic plugins to include with those listed in the `plugins` field. Relative paths are resolved from the working directory of the initContainer that will install the plugins (`/opt/app-root/src`). | list | `["dynamic-plugins.default.yaml"]` |
 | global.dynamic.includes[0] | List of dynamic plugins included inside the `janus-idp/backstage-showcase` container image, some of which are disabled by default. This file ONLY works with the `janus-idp/backstage-showcase` container image. | string | `"dynamic-plugins.default.yaml"` |
 | global.dynamic.plugins | List of dynamic plugins, possibly overriding the plugins listed in `includes` files. Every item defines the plugin `package` as a [NPM package spec](https://docs.npmjs.com/cli/v10/using-npm/package-spec), an optional `pluginConfig` with plugin-specific backstage configuration, and an optional `disabled` flag to disable/enable a plugin listed in `includes` files. It also includes an `integrity` field that is used to verify the plugin package [integrity](https://w3c.github.io/webappsec-subresource-integrity/#integrity-metadata-description). | list | `[]` |
-| global.host | Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig` | string | `""` |
+| global.host | Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`. If neither `global.clusterRouterBase` nor `global.host` are set, the helm chart will attempt to autofill with the hostname of the [OCP Ingress configuration](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.14/html/networking/configuring-ingress#nw-installation-ingress-config-asset_configuring-ingress) | string | `""` |
 | route | OpenShift Route parameters | object | `{"annotations":{},"enabled":true,"host":"{{ .Values.global.host }}","path":"/","tls":{"caCertificate":"","certificate":"","destinationCACertificate":"","enabled":true,"insecureEdgeTerminationPolicy":"Redirect","key":"","termination":"edge"},"wildcardPolicy":"None"}` |
 | route.annotations | Route specific annotations | object | `{}` |
 | route.enabled | Enable the creation of the route resource | bool | `true` |
@@ -167,7 +158,7 @@ Features enabled by the default chart configuration:
 2. Exposes a `Route` for easy access to the instance
 3. Enables OpenShift-compatible PostgreSQL database storage
 
-For additional instance features please consuls [documentation for `janus-idp/backstage-showcase`](https://github.com/janus-idp/backstage-showcase/).
+For additional instance features please consult the [documentation for `janus-idp/backstage-showcase`](https://github.com/janus-idp/backstage-showcase/tree/main/showcase-docs).
 
 Additional features can be enabled by extending the default configuration at:
 
@@ -182,9 +173,9 @@ upstream:
 
 ## Features
 
-This charts defaults to using the Janus-IDP Backstage Showcase image that is OpenShift compatible:
+This charts defaults to using the [latest Janus-IDP Backstage Showcase image](https://quay.io/janus-idp/backstage-showcase:latest) that is OpenShift compatible:
 
-```
+```console
 quay.io/janus-idp/backstage-showcase:latest
 ```
 
@@ -194,11 +185,13 @@ Additionally this chart enhances the upstream Backstage chart with following Ope
 
 This chart offers a drop-in replacement for the `Ingress` resource already provided by the upstream chart via an OpenShift `Route`.
 
-OpenShift routes are enabled by default. In order to use the chart without it, please switch to the `Ingress` resource via `upstream.ingress` values.
+OpenShift routes are enabled by default. In order to use the chart without it, please set `route.enabled` to `false` and switch to the `Ingress` resource via `upstream.ingress` values.
 
-Routes can be further configured via the `route` value.
+Routes can be further configured via the `route` field.
 
-By default, the chart expects you to expose Backstage via the autogenerated hostname. To provide Backstage pod with the right context, please adjust following value:
+By default, the chart expects you to expose Backstage via the autogenerated hostname, which is automatically obtained from the OpenShift Ingress Configurations.
+
+To manually provide the Backstage pod with the right context, please add the following value:
 
 ```yaml
 # values.yaml
@@ -206,7 +199,9 @@ global:
   clusterRouterBase: apps.example.com
 ```
 
-Custom hosts are also supported via following shorthand:
+> Tip: you can use `helm upgrade -i --set global.clusterRouterBase=apps.example.com ...` instead of a value file
+
+Custom hosts are also supported via the following shorthand:
 
 ```yaml
 # values.yaml
@@ -214,9 +209,11 @@ global:
   host: backstage.example.com
 ```
 
-Please note this is just a templating shorthand. For full manual configuration please pay attention to values under `route` key.
+> Note: Setting either `global.host` or `global.clusterRouterBase` will disable the automatic hostname discovery.
+        When both fields are set, `global.host` will take precedence.
+        These are just templating shorthands. For full manual configuration please pay attention to values under the `route` key.
 
-Please note that any custom modifications to how backstage is being exposed may require additional changes to values:
+Any custom modifications to how backstage is being exposed may require additional changes to the `values.yaml`:
 
 ```yaml
 # values.yaml
@@ -233,12 +230,12 @@ upstream:
 
 ### Vanilla Kubernetes compatibility mode
 
-In order to deploy this chart on vanilla Kubernetes or any other non-OCP platform, please make sure to apply following changes. Further customization may be required, depending on your exact Kubernetes setup:
+In order to deploy this chart on vanilla Kubernetes or any other non-OCP platform, please make sure to apply the following changes. Note that further customizations may be required, depending on your exact Kubernetes setup:
 
 ```yaml
 # values.yaml
 global:
-  host: # Specify your own Ingress host
+  host: # Specify your own Ingress host as automatic hostname discovery is not supported outside of OpenShift
 route:
   enabled: false  # OpenShift Routes do not exist on vanilla Kubernetes
 upstream:

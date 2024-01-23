@@ -60,7 +60,7 @@ jobs:
           helm repo update
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml
+        run: ct lint --config ct.yaml --helm-extra-args="--set upstream.backstage.image.tag=latest --set global.clusterRouterBase=app.example.yaml"
 
       - name: Create KIND Cluster
         uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140 # v1.8.0
@@ -70,7 +70,7 @@ jobs:
 
       - name: Run chart-testing (latest)
         # test with latest stable backstage-showcase release
-        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=latest"
+        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=latest --set=global.clusterRouterBase=app.example.com"
   test-next:
     name: Test Next Release
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
           helm repo update
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml
+        run: ct lint --config ct.yaml --helm-extra-args="--set upstream.backstage.image.tag=next --set global.clusterRouterBase=app.example.yaml"
 
       - name: Create KIND Cluster
         uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140 # v1.8.0
@@ -110,4 +110,4 @@ jobs:
 
       - name: Run chart-testing (next)
         # test with the next backstage-showcase version (main branch)
-        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=next"
+        run: ct install --config ct-install.yaml --helm-extra-set-args="--set=upstream.backstage.image.tag=next --set=global.clusterRouterBase=app.example.com"
