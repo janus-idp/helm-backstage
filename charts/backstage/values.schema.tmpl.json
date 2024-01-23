@@ -23,7 +23,7 @@
                 "clusterRouterBase": {
                     "title": "Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.",
                     "type": "string",
-                    "default": "apps.example.com"
+                    "default": ""
                 },
                 "host": {
                     "title": "Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`",
@@ -93,7 +93,7 @@
                                     "default": ""
                                 },
                                 "value": {
-                                    "title": "Instead of generating a secret value, use fo;lowing value",
+                                    "title": "Instead of generating a secret value, use the following value",
                                     "type": "string",
                                     "default": ""
                                 }

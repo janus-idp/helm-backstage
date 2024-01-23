@@ -14,8 +14,9 @@ global:
     plugins: []
 
   # -- Shorthand for users who do not want to specify a custom HOSTNAME. Used ONLY with the DEFAULT upstream.backstage.appConfig value and with OCP Route enabled.
-  clusterRouterBase: apps.example.com
-  # -- Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`
+  clusterRouterBase: ""
+  # -- Custom hostname shorthand, overrides `global.clusterRouterBase`, `upstream.ingress.host`, `route.host`, and url values in `upstream.backstage.appConfig`.
+  # If neither `global.clusterRouterBase` nor `global.host` are set, the helm chart will attempt to autofill with the hostname of the [OCP Ingress configuration](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.14/html/networking/configuring-ingress#nw-installation-ingress-config-asset_configuring-ingress)
   host: ""
   # -- Enable service authentication within Backstage instance
   auth:
@@ -26,7 +27,7 @@ global:
       enabled: true
       # -- Instead of generating a secret value, refer to existing secret
       existingSecret: ""
-      # -- Instead of generating a secret value, use fo;lowing value
+      # -- Instead of generating a secret value, use the following value
       value: ""
 
 # -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
@@ -48,7 +49,7 @@ upstream:
     # can't accommodate that properly.
     appConfig:
       app:
-        # Please update to match host in case you don't want to configure hostname via `global.clusterRouterBase` or `global.host`.
+        # Please update to match host in case you don't want to configure hostname via `global.clusterRouterBase` or `global.host` if not deploying on an openshift cluster.
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
       backend:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
