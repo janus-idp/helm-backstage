@@ -22,7 +22,7 @@ spec:
 {{- $host := tpl .Values.route.host . -}}
 {{- if $host }}
   host: {{ $host }}
-{{- else if .Values.global.clusterRouterBase }}
+{{- else }}
   host: {{ include "janus-idp.hostname" . }}
 {{- end }}
 {{- if .Values.route.path }}
