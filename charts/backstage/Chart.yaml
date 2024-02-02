@@ -32,8 +32,8 @@ keywords:
   - janus-idp
 kubeVersion: ">= 1.19.0-0"
 maintainers:
-  - name: Janus-IDP
-    url: https://janus-idp.io
+  - name: Red Hat Developer Hub Team
+    url: https://github.com/redhat-developer/rhdh-chart
 name: backstage
 type: application
 sources:

@@ -1,4 +1,4 @@
-# Janus-IDP Backstage Helm Chart
+# Janus-IDP Backstage Helm Chart for OpenShift
 
 > **:exclamation: This Helm Chart is deprecated!**
 

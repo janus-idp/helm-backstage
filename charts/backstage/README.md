@@ -1,5 +1,5 @@
 
-# Janus-IDP Backstage Helm Chart
+# Janus-IDP Backstage Helm Chart for OpenShift
 
 > **:exclamation: This Helm Chart is deprecated!**
 
@@ -15,7 +15,7 @@ DEPRECATED A Helm chart for deploying a Backstage application. See https://githu
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Janus-IDP |  | <https://janus-idp.io> |
+| Red Hat Developer Hub Team |  | <https://github.com/redhat-developer/rhdh-chart> |
 
 ## Source Code
 
