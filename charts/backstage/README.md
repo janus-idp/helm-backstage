@@ -1,11 +1,13 @@
 
-# Janus-IDP Backstage Helm Chart
+# Janus-IDP Backstage Helm Chart for OpenShift
+
+> **:exclamation: This Helm Chart is deprecated!**
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
-![Version: 2.12.4](https://img.shields.io/badge/Version-2.12.4-informational?style=flat-square)
+![Version: 2.12.5](https://img.shields.io/badge/Version-2.12.5-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
-A Helm chart for deploying a Backstage application
+DEPRECATED A Helm chart for deploying a Backstage application. See https://github.com/redhat-developer/rhdh-chart
 
 **Homepage:** <https://janus-idp.io>
 
@@ -13,11 +15,11 @@ A Helm chart for deploying a Backstage application
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Janus-IDP |  | <https://janus-idp.io> |
+| Red Hat Developer Hub Team |  | <https://github.com/redhat-developer/rhdh-chart> |
 
 ## Source Code
 
-* <https://github.com/janus-idp/helm-backstage>
+* <https://github.com/redhat-developer/rhdh-chart>
 * <https://github.com/janus-idp/backstage-showcase>
 
 ---
@@ -65,6 +67,8 @@ Chart is available in the following formats:
 The following command can be used to add the chart repository:
 
 ```console
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add backstage https://backstage.github.io/charts
 helm repo add janus-idp https://janus-idp.github.io/helm-backstage
 ```
 
@@ -86,9 +90,17 @@ helm upgrade -i <release_name> janus-idp/backstage
 
 ### Installing from an OCI Registry
 
-Chart is also available in OCI format. The list of available releases can be found [here](https://github.com/janus-idp/helm-backstage/pkgs/container/charts%2Fbackstage).
+Note: this repo is deprecated. New chart updates will be in `[redhat-developer/rhdh-chart](https://github.com/orgs/redhat-developer/packages/container/package/rhdh-chart%2Fbackstage)` starting in 2024.
+
+Chart is also available in OCI format. The list of available releases can be found [here](https://github.com/orgs/janus-idp/packages/container/package/helm-backstage%2Fbackstage).
 
 Install one of the available versions:
+
+```shell
+helm upgrade -i <release_name> oci://ghcr.io/redhat-developer/rhdh-chart/backstage --version=<version>
+```
+
+or
 
 ```shell
 helm upgrade -i <release_name> oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>

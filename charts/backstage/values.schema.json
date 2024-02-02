@@ -1,5 +1,5 @@
 {
-    "$id": "https://raw.githubusercontent.com/janus-idp/helm-backstage/main/charts/backstage/values.schema.json",
+    "$id": "https://raw.githubusercontent.com/redhat-developer/rhdh-chart/main/charts/backstage/values.schema.json",
     "properties": {
         "global": {
             "properties": {

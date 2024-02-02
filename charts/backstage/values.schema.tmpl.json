@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/janus-idp/helm-backstage/main/charts/backstage/values.schema.json",
+    "$id": "https://raw.githubusercontent.com/redhat-developer/rhdh-chart/main/charts/backstage/values.schema.json",
     "type": "object",
     "title": "Root Schema",
     "properties": {

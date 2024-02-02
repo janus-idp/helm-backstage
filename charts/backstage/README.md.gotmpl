@@ -1,4 +1,4 @@
-# Janus-IDP Backstage Helm Chart
+# Janus-IDP Backstage Helm Chart for OpenShift
 
 {{ template "chart.deprecationWarning" . }}
 
@@ -59,6 +59,8 @@ Chart is available in the following formats:
 The following command can be used to add the chart repository:
 
 ```console
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add backstage https://backstage.github.io/charts
 helm repo add janus-idp https://janus-idp.github.io/helm-backstage
 ```
 
@@ -80,9 +82,17 @@ helm upgrade -i <release_name> janus-idp/backstage
 
 ### Installing from an OCI Registry
 
-Chart is also available in OCI format. The list of available releases can be found [here](https://github.com/janus-idp/helm-backstage/pkgs/container/charts%2Fbackstage).
+Note: this repo is deprecated. New chart updates will be in `[redhat-developer/rhdh-chart](https://github.com/orgs/redhat-developer/packages/container/package/rhdh-chart%2Fbackstage)` starting in 2024.
+
+Chart is also available in OCI format. The list of available releases can be found [here](https://github.com/orgs/janus-idp/packages/container/package/helm-backstage%2Fbackstage).
 
 Install one of the available versions:
+
+```shell
+helm upgrade -i <release_name> oci://ghcr.io/redhat-developer/rhdh-chart/backstage --version=<version>
+```
+
+or
 
 ```shell
 helm upgrade -i <release_name> oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>
