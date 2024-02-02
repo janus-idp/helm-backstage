@@ -12,7 +12,8 @@ annotations:
   charts.openshift.io/provider: Janus-IDP
   charts.openshift.io/supportURL: https://github.com/redhat-developer/rhdh-chart/issues
 apiVersion: v2
-description: A Helm chart for deploying a Backstage application. Deprecated - moving to redhat-developer/rhdh-chart
+description: DEPRECATED A Helm chart for deploying a Backstage application. See https://github.com/redhat-developer/rhdh-chart
+deprecated: true
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami

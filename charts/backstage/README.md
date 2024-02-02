@@ -1,11 +1,13 @@
 
 # Janus-IDP Backstage Helm Chart
 
+> **:exclamation: This Helm Chart is deprecated!**
+
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/janus-idp&style=flat-square)](https://artifacthub.io/packages/search?repo=janus-idp)
 ![Version: 2.12.5](https://img.shields.io/badge/Version-2.12.5-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
-A Helm chart for deploying a Backstage application. Deprecated - moving to redhat-developer/rhdh-chart
+DEPRECATED A Helm chart for deploying a Backstage application. See https://github.com/redhat-developer/rhdh-chart
 
 **Homepage:** <https://janus-idp.io>
 
@@ -65,6 +67,8 @@ Chart is available in the following formats:
 The following command can be used to add the chart repository:
 
 ```console
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add backstage https://backstage.github.io/charts
 helm repo add janus-idp https://janus-idp.github.io/helm-backstage
 ```
 
