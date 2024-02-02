@@ -33,9 +33,17 @@ helm upgrade -i <release_name> janus-idp/backstage
 
 ### Installing from an OCI Registry
 
-Charts are also available in OCI format. The list of available charts can be found [here](https://github.com/orgs/janus-idp?tab=packages&repo_name=helm-backstage).
+Note: this repo is deprecated. New chart updates will be in `[redhat-developer/rhdh-chart](https://github.com/orgs/redhat-developer/packages/container/package/rhdh-chart%2Fbackstage)` starting in 2024.
+
+Chart is also available in OCI format. The list of available releases can be found [here](https://github.com/orgs/janus-idp/packages/container/package/helm-backstage%2Fbackstage).
 
 Install one of the available charts:
+
+```shell
+helm upgrade -i <release_name> oci://ghcr.io/redhat-developer/rhdh-chart/backstage --version=<version>
+```
+
+or
 
 ```shell
 helm upgrade -i <release_name> oci://ghcr.io/janus-idp/helm-backstage/backstage --version=<version>

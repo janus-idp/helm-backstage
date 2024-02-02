@@ -3,16 +3,16 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/links: |
     - name: support
-      url: https://github.com/janus-idp/helm-backstage/issues
+      url: https://github.com/redhat-developer/rhdh-chart/issues
     - name: Chart Source
-      url: https://github.com/janus-idp/helm-backstage
+      url: https://github.com/redhat-developer/rhdh-chart
     - name: Default Image Source
       url: https://github.com/janus-idp/backstage-showcase
   charts.openshift.io/name: Backstage
   charts.openshift.io/provider: Janus-IDP
-  charts.openshift.io/supportURL: https://github.com/janus-idp/helm-backstage/issues
+  charts.openshift.io/supportURL: https://github.com/redhat-developer/rhdh-chart/issues
 apiVersion: v2
-description: A Helm chart for deploying a Backstage application
+description: A Helm chart for deploying a Backstage application. Deprecated - moving to redhat-developer/rhdh-chart
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
@@ -36,7 +36,7 @@ maintainers:
 name: backstage
 type: application
 sources:
-  - https://github.com/janus-idp/helm-backstage
+  - https://github.com/redhat-developer/rhdh-chart
   - https://github.com/janus-idp/backstage-showcase
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
