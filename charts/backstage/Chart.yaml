@@ -21,7 +21,7 @@ dependencies:
     version: "2.13.3"
   - name: backstage
     repository: https://backstage.github.io/charts
-    version: "1.8.0"
+    version: "1.8.2"
     alias: upstream
 home: https://janus-idp.io
 icon: https://avatars.githubusercontent.com/u/117844786
@@ -41,4 +41,4 @@ sources:
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 2.12.1
+version: 2.12.2
