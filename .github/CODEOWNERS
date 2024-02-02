@@ -12,8 +12,8 @@
 # This should make it easy to add new rules without breaking existing ones.
 
 # Global rule:
-*            @janus-idp/maintainers-helm
+*            @redhat-developer/rhdh-helm
 
 # Documentation:
-*.md.gotmpl  @janus-idp/maintainers-docs
-/README.md   @janus-idp/maintainers-docs
+*.md.gotmpl  @redhat-developer/RHDH-content
+/README.md   @redhat-developer/RHDH-content
